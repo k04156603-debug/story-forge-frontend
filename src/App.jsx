@@ -6,6 +6,7 @@ import Processing from './pages/Processing';
 import Results from './pages/Results';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import AuthCallback from './pages/AuthCallback';
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('sf_token');
@@ -19,6 +20,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route element={
           <ProtectedRoute>
             <Layout />
