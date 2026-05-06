@@ -43,6 +43,12 @@ export const storyApi = {
   export: (prdId, format) => api.get(`/export/${prdId}/${format}`, { responseType: 'blob' }),
 };
 
+// Export API
+export const exportApi = {
+  export: (prdId, format) =>
+    api.get(`/export/${prdId}/${format}`, { responseType: 'blob' }),
+};
+
 // Analysis API
 export const analysisApi = {
   getIssues: (prdId) => api.get(`/analysis/${prdId}/issues`),
