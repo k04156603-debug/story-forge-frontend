@@ -6,6 +6,7 @@ import Processing from './pages/Processing';
 import Results from './pages/Results';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Settings from './pages/Settings';
 import AuthCallback from './pages/AuthCallback';
 
 function ProtectedRoute({ children }) {
@@ -21,15 +22,18 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route element={
-          <ProtectedRoute>
-            <Layout />
-          </ProtectedRoute>
-        }>
+        <Route
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/" element={<Dashboard />} />
           <Route path="/upload" element={<UploadPrd />} />
           <Route path="/processing/:id" element={<Processing />} />
           <Route path="/results/:id" element={<Results />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
     </BrowserRouter>
