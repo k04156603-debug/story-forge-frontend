@@ -46,7 +46,7 @@ export default function Sidebar() {
                 className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200 group relative"
                 style={{
                   backgroundColor: active ? 'rgba(167,139,250,0.15)' : 'transparent',
-                  color: active ? '#a78bfa' : 'var(--text-secondary)',
+                  color: active ? "var(--sidebar-icon-active)" : "var(--sidebar-icon)",
                 }}
                 onMouseEnter={e => { if (!active) e.currentTarget.style.backgroundColor = 'var(--hover-bg)'; }}
                 onMouseLeave={e => { if (!active) e.currentTarget.style.backgroundColor = 'transparent'; }}
@@ -72,9 +72,9 @@ export default function Sidebar() {
             to="/settings"
             title="Settings"
             className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors group relative"
-            style={{ color: 'var(--text-secondary)' }}
+            style={{ color: 'var(--sidebar-icon)' }}
             onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--hover-bg)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
-            onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--sidebar-icon)'; }}
           >
             <Settings size={20} />
             <span
@@ -90,9 +90,9 @@ export default function Sidebar() {
             onClick={() => setShowLogoutModal(true)}
             title="Logout"
             className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors group relative"
-            style={{ color: 'var(--text-secondary)' }}
+            style={{ color: 'var(--sidebar-icon)' }}
             onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'rgba(239,68,68,0.1)'; e.currentTarget.style.color = '#f87171'; }}
-            onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--sidebar-icon)'; }}
           >
             <LogOut size={20} />
             <span
@@ -122,7 +122,7 @@ export default function Sidebar() {
             <h3 className="text-xl font-bold text-center mb-2" style={{ color: 'var(--text-primary)' }}>
               Logout of Device?
             </h3>
-            <p className="text-sm text-center mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            <p className="text-sm text-center mb-8 leading-relaxed" style={{ color: 'var(--sidebar-icon)' }}>
               You will be signed out of your Story Forge account on this device. You can log back in anytime.
             </p>
             <div className="flex gap-3">
@@ -131,7 +131,7 @@ export default function Sidebar() {
                 className="flex-1 py-3 rounded-xl transition-all font-medium text-sm"
                 style={{ border: '1px solid var(--border-color)', color: 'var(--text-secondary)', backgroundColor: 'transparent' }}
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--hover-bg)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--sidebar-icon)'; }}
               >
                 Cancel
               </button>

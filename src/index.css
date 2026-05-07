@@ -54,6 +54,7 @@
   --input-border: rgba(255,255,255,0.1);
   --hover-bg: rgba(255,255,255,0.06);
   --accent: #818cf8;
+  --btn-text: #ffffff;
 }
 
 /* Light — warm white, high contrast */
@@ -61,16 +62,19 @@
   --bg-base: #eef0f5;
   --bg-surface: #ffffff;
   --bg-card: rgba(0,0,0,0.05);
-  --border-color: rgba(0,0,0,0.14);
+  --border-color: rgba(0,0,0,0.12);
   --text-primary: #0d0d0d;
   --text-secondary: #444444;
   --text-muted: #888888;
-  --sidebar-bg: #1e293b;
-  --sidebar-border: rgba(255,255,255,0.06);
+  --sidebar-bg: #f0f0f5;
+  --sidebar-border: rgba(0,0,0,0.1);
   --input-bg: rgba(0,0,0,0.06);
   --input-border: rgba(0,0,0,0.15);
   --hover-bg: rgba(0,0,0,0.07);
   --accent: #4f46e5;
+  --btn-text: #ffffff;
+  --sidebar-icon: #666666;
+  --sidebar-icon-active: #4f46e5;
 }
 
 /* Ocean — deep teal blues */
@@ -88,6 +92,9 @@
   --input-border: rgba(0,180,220,0.2);
   --hover-bg: rgba(0,180,220,0.1);
   --accent: #00b4dc;
+  --btn-text: #ffffff;
+  --sidebar-icon: rgba(0,180,220,0.5);
+  --sidebar-icon-active: #00b4dc;
 }
 
 /* Love — deep rose / magenta */
@@ -105,6 +112,9 @@
   --input-border: rgba(255,50,120,0.22);
   --hover-bg: rgba(255,50,120,0.1);
   --accent: #ff3278;
+  --btn-text: #ffffff;
+  --sidebar-icon: rgba(255,50,120,0.5);
+  --sidebar-icon-active: #ff3278;
 }
 
 /* Cyberpunk — neon green on black */
@@ -122,6 +132,9 @@
   --input-border: rgba(0,255,100,0.25);
   --hover-bg: rgba(0,255,100,0.08);
   --accent: #00ff64;
+  --btn-text: #000000;
+  --sidebar-icon: rgba(0,255,100,0.5);
+  --sidebar-icon-active: #00ff64;
 }
 
 /* ─── Base ──────────────────────────────────────── */
@@ -178,8 +191,8 @@ body {
 
 /* ─── Glow button ───────────────────────────────── */
 .btn-glow {
-  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-500));
-  color: white;
+  background: var(--accent, #6366f1);
+  color: var(--btn-text, #ffffff);
   font-weight: 600;
   padding: 0.75rem 1.5rem;
   border-radius: 12px;
@@ -190,8 +203,9 @@ body {
   overflow: hidden;
 }
 .btn-glow:hover {
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), 0 0 60px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 60%, transparent), 0 0 40px color-mix(in srgb, var(--accent) 20%, transparent);
   transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 .btn-glow:active {
   transform: translateY(0);
