@@ -24,17 +24,17 @@ export default function Dashboard() {
   const getStatusIcon = (status) => {
     switch (status) {
       case 'completed': return <CheckCircle2 size={16} className="text-success-400" />;
-      case 'failed': return <AlertTriangle size={16} className="text-danger-400" />;
-      case 'uploaded': return <Clock size={16} className="text-surface-400" />;
-      default: return <Loader2 size={16} className="text-primary-400 animate-spin" />;
+      case 'failed':    return <AlertTriangle size={16} className="text-danger-400" />;
+      case 'uploaded':  return <Clock size={16} className="text-surface-400" />;
+      default:          return <Loader2 size={16} className="text-primary-400 animate-spin" />;
     }
   };
 
   const getStatusBadge = (status) => {
     const styles = {
       completed: 'bg-success-500/15 text-success-400 border-success-500/30',
-      failed: 'bg-danger-500/15 text-danger-400 border-danger-500/30',
-      uploaded: 'bg-surface-700/50 text-surface-400 border-surface-700',
+      failed:    'bg-danger-500/15 text-danger-400 border-danger-500/30',
+      uploaded:  'bg-surface-700/50 text-surface-400 border-surface-700',
     };
     return styles[status] || 'bg-primary-500/15 text-primary-400 border-primary-500/30';
   };
@@ -45,7 +45,9 @@ export default function Dashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold gradient-text">Story Forge</h1>
-          <p className="text-surface-400 mt-1">AI-powered PRD to Agile story converter</p>
+          <p className="mt-1" style={{ color: 'var(--text-secondary)' }}>
+            AI-powered PRD to Agile story converter
+          </p>
         </div>
         <Link to="/upload" className="btn-glow flex items-center gap-2">
           <Plus size={18} />
@@ -55,57 +57,84 @@ export default function Dashboard() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="glass-card p-5 flex items-center gap-4">
+        {/* Total PRDs */}
+        <div
+          className="p-5 flex items-center gap-4 rounded-2xl border"
+          style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+        >
           <div className="w-12 h-12 rounded-xl bg-primary-600/20 flex items-center justify-center">
             <BookOpen size={22} className="text-primary-400" />
           </div>
           <div>
-            <p className="text-2xl font-bold text-white">{prds.length}</p>
-            <p className="text-sm text-surface-400">Total PRDs</p>
+            <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{prds.length}</p>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Total PRDs</p>
           </div>
         </div>
-        <div className="glass-card p-5 flex items-center gap-4">
+
+        {/* Processed */}
+        <div
+          className="p-5 flex items-center gap-4 rounded-2xl border"
+          style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+        >
           <div className="w-12 h-12 rounded-xl bg-success-500/20 flex items-center justify-center">
             <CheckCircle2 size={22} className="text-success-400" />
           </div>
           <div>
-            <p className="text-2xl font-bold text-white">{prds.filter(p => p.status === 'completed').length}</p>
-            <p className="text-sm text-surface-400">Processed</p>
+            <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+              {prds.filter(p => p.status === 'completed').length}
+            </p>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Processed</p>
           </div>
         </div>
-        <div className="glass-card p-5 flex items-center gap-4">
+
+        {/* Stories Generated */}
+        <div
+          className="p-5 flex items-center gap-4 rounded-2xl border"
+          style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+        >
           <div className="w-12 h-12 rounded-xl bg-accent-500/20 flex items-center justify-center">
             <BarChart3 size={22} className="text-accent-400" />
           </div>
           <div>
-            <p className="text-2xl font-bold text-white">
+            <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
               {prds.reduce((sum, p) => sum + (p.metadata?.storyCount || 0), 0)}
             </p>
-            <p className="text-sm text-surface-400">Stories Generated</p>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Stories Generated</p>
           </div>
         </div>
       </div>
 
       {/* PRDs List */}
       <div>
-        <h2 className="text-lg font-semibold text-white mb-4">Your PRDs</h2>
+        <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
+          Your PRDs
+        </h2>
 
         {prdLoading && prds.length === 0 ? (
           <div className="space-y-3">
             {[1, 2, 3].map(i => (
-              <div key={i} className="glass-card p-5">
+              <div
+                key={i}
+                className="p-5 rounded-2xl border"
+                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+              >
                 <div className="skeleton h-5 w-48 mb-3" />
                 <div className="skeleton h-4 w-32" />
               </div>
             ))}
           </div>
         ) : prds.length === 0 ? (
-          <div className="glass-card p-12 text-center">
+          <div
+            className="p-12 text-center rounded-2xl border"
+            style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+          >
             <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-primary-600/10 flex items-center justify-center">
               <Sparkles size={36} className="text-primary-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">No PRDs yet</h3>
-            <p className="text-surface-400 mb-6 max-w-md mx-auto">
+            <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
+              No PRDs yet
+            </h3>
+            <p className="mb-6 max-w-md mx-auto" style={{ color: 'var(--text-secondary)' }}>
               Upload a Product Requirements Document to get started. We'll break it down into structured user stories, identify quality issues, and map dependencies.
             </p>
             <Link to="/upload" className="btn-glow inline-flex items-center gap-2">
@@ -123,7 +152,10 @@ export default function Dashboard() {
                   else if (['extracting', 'generating', 'analyzing', 'parsing'].includes(prd.status))
                     navigate(`/processing/${prd._id}`);
                 }}
-                className="glass-card p-5 cursor-pointer group"
+                className="p-5 rounded-2xl border cursor-pointer group transition-all duration-200"
+                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+                onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--hover-bg)'; }}
+                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'var(--bg-card)'; }}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -131,10 +163,10 @@ export default function Dashboard() {
                       <FileText size={18} className="text-primary-400" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white group-hover:text-primary-300 transition-colors">
+                      <h3 className="font-semibold group-hover:text-primary-300 transition-colors" style={{ color: 'var(--text-primary)' }}>
                         {prd.title}
                       </h3>
-                      <div className="flex items-center gap-3 mt-1 text-sm text-surface-400">
+                      <div className="flex items-center gap-3 mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
                         <span>{prd.fileType?.toUpperCase()}</span>
                         <span>•</span>
                         <span>{(prd.charCount / 1000).toFixed(1)}k chars</span>
