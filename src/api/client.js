@@ -44,13 +44,15 @@ export const prdApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
   uploadText: (content, title) => api.post('/prd/text', { content, title }),
-  getStatus: (id) => api.get(`/prd/${id}/status`),
+  process: (id) => api.post(`/prd/${id}/process`),
+  getStatus: (id) => api.get(`/prd/${id}`),
   delete: (id) => api.delete(`/prd/${id}`),
 };
 
 // Story API
 export const storyApi = {
   getGrouped: (prdId) => api.get(`/stories/${prdId}/grouped`),
+  getByPrd: (prdId) => api.get(`/stories/${prdId}/grouped`),
   getStats: (prdId) => api.get(`/stories/${prdId}/stats`),
   update: (id, data) => api.patch(`/stories/${id}`, data),
   export: (prdId, format) => api.get(`/export/${prdId}/${format}`, { responseType: 'blob' }),
