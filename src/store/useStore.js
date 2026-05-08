@@ -2,30 +2,22 @@ import { create } from 'zustand';
 import { prdApi, storyApi, analysisApi } from '../api/client';
 
 const useStore = create((set, get) => ({
-  // ─── PRD State ───────────────────────────────────
   prds: [],
   currentPrd: null,
   prdLoading: false,
   prdError: null,
-
-  // ─── Stories State ───────────────────────────────
   stories: [],
   groupedStories: [],
   storyStats: null,
   storiesLoading: false,
-
-  // ─── Analysis State ──────────────────────────────
   qualityIssues: [],
   qualitySummary: null,
   dependencyGraph: null,
   analysisLoading: false,
-
-  // ─── UI State ────────────────────────────────────
   activeTab: 'stories',
   selectedStory: null,
   processingStatus: null,
 
-  // ─── PRD Actions ─────────────────────────────────
   fetchPrds: async () => {
     set({ prdLoading: true, prdError: null });
     try {
@@ -75,13 +67,14 @@ const useStore = create((set, get) => ({
   pollStatus: async (prdId) => {
     try {
       const res = await prdApi.getStatus(prdId);
-      const prd = res;
+      // Backend returns { success, data: { ...prd } } — unwrap it
+      const prd = res?.data || res;
       set({
         currentPrd: prd,
         processingStatus: {
           id: prdId,
-          progress: prd.processingProgress,
-          message: prd.processingMessage,
+          progress: prd.processingProgress || 0,
+          message: prd.processingMessage || 'Processing...',
           status: prd.status,
         },
       });
@@ -101,12 +94,11 @@ const useStore = create((set, get) => ({
     }
   },
 
-  // ─── Story Actions ───────────────────────────────
   fetchStories: async (prdId) => {
     set({ storiesLoading: true });
     try {
       const [grouped, stats] = await Promise.all([
-        storyApi.getByPrd(prdId, true),
+        storyApi.getByPrd(prdId),
         storyApi.getStats(prdId),
       ]);
       set({
@@ -122,7 +114,6 @@ const useStore = create((set, get) => ({
   updateStory: async (id, data) => {
     try {
       const res = await storyApi.update(id, data);
-      // Update in grouped stories
       set((state) => ({
         groupedStories: state.groupedStories.map((group) => ({
           ...group,
@@ -136,7 +127,6 @@ const useStore = create((set, get) => ({
     }
   },
 
-  // ─── Analysis Actions ────────────────────────────
   fetchAnalysis: async (prdId) => {
     set({ analysisLoading: true });
     try {
@@ -169,7 +159,6 @@ const useStore = create((set, get) => ({
     }
   },
 
-  // ─── UI Actions ──────────────────────────────────
   setActiveTab: (tab) => set({ activeTab: tab }),
   setSelectedStory: (story) => set({ selectedStory: story }),
   clearError: () => set({ prdError: null }),
