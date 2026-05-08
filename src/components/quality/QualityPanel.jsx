@@ -4,9 +4,27 @@ import { AlertTriangle, AlertCircle, Info, CheckCircle2, Filter } from 'lucide-r
 import toast from 'react-hot-toast';
 
 const severityConfig = {
-  blocker: { icon: AlertTriangle, color: 'danger', bg: 'bg-danger-500/10', border: 'border-danger-500/30' },
-  warning: { icon: AlertCircle, color: 'warning', bg: 'bg-warning-500/10', border: 'border-warning-500/30' },
-  suggestion: { icon: Info, color: 'accent', bg: 'bg-accent-500/10', border: 'border-accent-500/30' },
+  blocker: {
+    icon: AlertTriangle,
+    color: '#DC2626',
+    bg: '#FEF2F2',
+    border: '#FECACA',
+    activeBg: 'rgba(220, 38, 38, 0.08)',
+  },
+  warning: {
+    icon: AlertCircle,
+    color: '#D97706',
+    bg: '#FFFBEB',
+    border: '#FDE68A',
+    activeBg: 'rgba(217, 119, 6, 0.08)',
+  },
+  suggestion: {
+    icon: Info,
+    color: '#0284C7',
+    bg: '#F0F9FF',
+    border: '#BAE6FD',
+    activeBg: 'rgba(2, 132, 199, 0.08)',
+  },
 };
 
 export default function QualityPanel({ issues, summary }) {
@@ -20,52 +38,69 @@ export default function QualityPanel({ issues, summary }) {
     toast.success('Issue marked as resolved');
   };
 
+  const filterBtnStyle = (isActive) => ({
+    fontSize: '0.75rem',
+    padding: '0.375rem 0.75rem',
+    borderRadius: '100px',
+    fontWeight: 500,
+    cursor: 'pointer',
+    transition: 'all 0.15s ease',
+    textTransform: 'capitalize',
+    border: isActive ? '1px solid var(--warm-gray)' : '1px solid transparent',
+    background: isActive ? '#FFFFFF' : 'transparent',
+    color: isActive ? 'var(--rich-black)' : 'var(--text-muted-ed)',
+    fontFamily: 'var(--font-sans)',
+  });
+
   return (
-    <div className="space-y-6">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Summary cards */}
       {summary && (
-        <div className="grid grid-cols-3 gap-3">
-          <div className="glass-card p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-danger-500/15 flex items-center justify-center">
-              <AlertTriangle size={18} className="text-danger-400" />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
+          {[
+            { icon: AlertTriangle, label: 'Blockers', count: summary.bySeverity?.blocker || 0, cfg: severityConfig.blocker },
+            { icon: AlertCircle, label: 'Warnings', count: summary.bySeverity?.warning || 0, cfg: severityConfig.warning },
+            { icon: Info, label: 'Suggestions', count: summary.bySeverity?.suggestion || 0, cfg: severityConfig.suggestion },
+          ].map(({ icon: Icon, label, count, cfg }, i) => (
+            <div key={i} style={{
+              background: '#FFFFFF',
+              border: '1px solid var(--warm-gray-subtle)',
+              borderRadius: '14px',
+              padding: '1rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+            }}>
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '10px',
+                background: cfg.bg,
+                border: `1px solid ${cfg.border}`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}>
+                <Icon size={16} color={cfg.color} />
+              </div>
+              <div>
+                <p style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--rich-black)' }}>{count}</p>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted-ed)' }}>{label}</p>
+              </div>
             </div>
-            <div>
-              <p className="text-xl font-bold text-white">{summary.bySeverity?.blocker || 0}</p>
-              <p className="text-xs text-surface-400">Blockers</p>
-            </div>
-          </div>
-          <div className="glass-card p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-warning-500/15 flex items-center justify-center">
-              <AlertCircle size={18} className="text-warning-400" />
-            </div>
-            <div>
-              <p className="text-xl font-bold text-white">{summary.bySeverity?.warning || 0}</p>
-              <p className="text-xs text-surface-400">Warnings</p>
-            </div>
-          </div>
-          <div className="glass-card p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-accent-500/15 flex items-center justify-center">
-              <Info size={18} className="text-accent-400" />
-            </div>
-            <div>
-              <p className="text-xl font-bold text-white">{summary.bySeverity?.suggestion || 0}</p>
-              <p className="text-xs text-surface-400">Suggestions</p>
-            </div>
-          </div>
+          ))}
         </div>
       )}
 
       {/* Filter bar */}
-      <div className="flex items-center gap-2">
-        <Filter size={14} className="text-surface-500" />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+        <Filter size={13} color="var(--text-muted-ed)" />
         {['all', 'blocker', 'warning', 'suggestion'].map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-all capitalize
-              ${filter === f
-                ? 'bg-primary-600/20 text-primary-300 border border-primary-500/30'
-                : 'text-surface-400 hover:text-surface-200 hover:bg-surface-800'}`}
+            style={filterBtnStyle(filter === f)}
           >
             {f}
           </button>
@@ -73,11 +108,17 @@ export default function QualityPanel({ issues, summary }) {
       </div>
 
       {/* Issues list */}
-      <div className="space-y-3">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {filtered.length === 0 ? (
-          <div className="glass-card p-8 text-center">
-            <CheckCircle2 size={32} className="mx-auto text-success-400 mb-3" />
-            <p className="text-surface-300">No issues found in this category</p>
+          <div style={{
+            background: '#FFFFFF',
+            border: '1px solid var(--warm-gray-subtle)',
+            borderRadius: '14px',
+            padding: '3rem',
+            textAlign: 'center',
+          }}>
+            <CheckCircle2 size={28} color="#16A34A" style={{ margin: '0 auto 0.75rem', display: 'block' }} />
+            <p style={{ color: 'var(--text-body)', fontSize: '0.9375rem' }}>No issues found in this category</p>
           </div>
         ) : (
           filtered.map((issue) => {
@@ -87,33 +128,68 @@ export default function QualityPanel({ issues, summary }) {
             return (
               <div
                 key={issue._id}
-                className={`glass-card p-4 border-l-4 ${config.border} ${issue.resolved ? 'opacity-50' : ''}`}
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid var(--warm-gray-subtle)',
+                  borderLeft: `3px solid ${config.border}`,
+                  borderRadius: '14px',
+                  padding: '1rem 1.25rem',
+                  opacity: issue.resolved ? 0.5 : 1,
+                }}
               >
-                <div className="flex items-start gap-3">
-                  <div className={`w-8 h-8 rounded-lg ${config.bg} flex items-center justify-center shrink-0 mt-0.5`}>
-                    <Icon size={16} className={`text-${config.color}-400`} />
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                  <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '8px',
+                    background: config.bg,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    marginTop: '0.125rem',
+                  }}>
+                    <Icon size={14} color={config.color} />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-medium text-white text-sm">{issue.title}</h4>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem', flexWrap: 'wrap' }}>
+                      <h4 style={{ fontWeight: 500, color: 'var(--rich-black)', fontSize: '0.875rem' }}>{issue.title}</h4>
                       <span className={`badge badge-${issue.severity}`}>{issue.severity}</span>
-                      <span className="text-xs text-surface-500 bg-surface-800 px-2 py-0.5 rounded">
+                      <span style={{
+                        fontSize: '0.65rem',
+                        color: 'var(--text-muted-ed)',
+                        background: 'var(--ivory-warm)',
+                        padding: '0.125rem 0.5rem',
+                        borderRadius: '4px',
+                        fontWeight: 500,
+                      }}>
                         {issue.issueType?.replace(/_/g, ' ')}
                       </span>
                     </div>
-                    <p className="text-sm text-surface-300 mb-2">{issue.description}</p>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-body)', marginBottom: '0.5rem' }}>{issue.description}</p>
 
                     {issue.originalText && (
-                      <div className="bg-surface-900/50 rounded-lg p-3 mb-2 border-l-2 border-surface-700">
-                        <p className="text-xs text-surface-500 mb-1">Original text:</p>
-                        <p className="text-sm text-surface-400 italic">"{issue.originalText}"</p>
+                      <div style={{
+                        background: 'var(--ivory-warm)',
+                        borderRadius: '10px',
+                        padding: '0.75rem 1rem',
+                        marginBottom: '0.5rem',
+                        borderLeft: '2px solid var(--warm-gray)',
+                      }}>
+                        <p style={{ fontSize: '0.7rem', color: 'var(--text-muted-ed)', marginBottom: '0.25rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Original text:</p>
+                        <p style={{ fontSize: '0.875rem', color: 'var(--text-body)', fontStyle: 'italic' }}>"{issue.originalText}"</p>
                       </div>
                     )}
 
                     {issue.suggestedFix && (
-                      <div className="bg-success-500/5 rounded-lg p-3 border border-success-500/20">
-                        <p className="text-xs text-success-400 mb-1">💡 Suggested fix:</p>
-                        <p className="text-sm text-surface-200">{issue.suggestedFix}</p>
+                      <div style={{
+                        background: '#F0FDF4',
+                        borderRadius: '10px',
+                        padding: '0.75rem 1rem',
+                        border: '1px solid #BBF7D0',
+                      }}>
+                        <p style={{ fontSize: '0.7rem', color: '#16A34A', marginBottom: '0.25rem', fontWeight: 500 }}>💡 Suggested fix:</p>
+                        <p style={{ fontSize: '0.875rem', color: 'var(--text-body)' }}>{issue.suggestedFix}</p>
                       </div>
                     )}
                   </div>
@@ -121,8 +197,19 @@ export default function QualityPanel({ issues, summary }) {
                   {!issue.resolved && (
                     <button
                       onClick={() => handleResolve(issue._id)}
-                      className="p-2 rounded-lg hover:bg-success-500/15 text-surface-500 hover:text-success-400 transition-colors shrink-0"
                       title="Mark as resolved"
+                      style={{
+                        padding: '0.375rem',
+                        borderRadius: '8px',
+                        background: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: 'var(--text-muted-ed)',
+                        flexShrink: 0,
+                        transition: 'all 0.15s ease',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.color = '#16A34A'; e.currentTarget.style.background = '#F0FDF4'; }}
+                      onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted-ed)'; e.currentTarget.style.background = 'transparent'; }}
                     >
                       <CheckCircle2 size={16} />
                     </button>

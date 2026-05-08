@@ -30,77 +30,151 @@ export default function StoryCard({ story }) {
     }
   };
 
+  const inputEditStyle = {
+    background: '#FFFFFF',
+    border: '1px solid var(--warm-gray)',
+    borderRadius: '10px',
+    padding: '0.5rem 0.75rem',
+    color: 'var(--rich-black)',
+    fontSize: '0.875rem',
+    fontFamily: 'var(--font-sans)',
+    outline: 'none',
+  };
+
   return (
-    <div className="glass-card overflow-hidden">
+    <div style={{
+      background: '#FFFFFF',
+      border: '1px solid var(--warm-gray-subtle)',
+      borderRadius: '14px',
+      overflow: 'hidden',
+      transition: 'border-color 0.15s ease',
+    }}
+    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--warm-gray)'; }}
+    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--warm-gray-subtle)'; }}
+    >
       {/* Header */}
       <div
-        className="p-4 flex items-center justify-between cursor-pointer"
+        style={{
+          padding: '1rem 1.25rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          cursor: 'pointer',
+        }}
         onClick={() => !editing && setExpanded(!expanded)}
       >
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <span className="text-xs font-mono text-primary-400 bg-primary-600/10 px-2 py-1 rounded-md shrink-0">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1, minWidth: 0 }}>
+          <span style={{
+            fontSize: '0.7rem',
+            fontFamily: "'SF Mono', 'Fira Code', monospace",
+            fontWeight: 600,
+            color: 'var(--terracotta)',
+            background: 'var(--terracotta-bg)',
+            padding: '0.25rem 0.5rem',
+            borderRadius: '6px',
+            flexShrink: 0,
+          }}>
             {story.storyId}
           </span>
           {editing ? (
             <input
               value={editData.title}
               onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-              className="flex-1 bg-surface-800 border border-primary-500/30 rounded-lg px-3 py-1 text-white text-sm focus:outline-none"
+              style={{ ...inputEditStyle, flex: 1 }}
               onClick={(e) => e.stopPropagation()}
             />
           ) : (
-            <h4 className="font-medium text-white truncate">{story.title}</h4>
+            <h4 style={{
+              fontWeight: 500,
+              color: 'var(--rich-black)',
+              fontSize: '0.9375rem',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}>
+              {story.title}
+            </h4>
           )}
         </div>
 
-        <div className="flex items-center gap-2 shrink-0 ml-3">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, marginLeft: '0.75rem' }}>
           <span className={`badge badge-${story.priority}`}>{story.priority}</span>
-          <span className="flex items-center gap-1 text-xs text-surface-400 bg-surface-800/50 px-2 py-1 rounded-lg">
-            <Hash size={12} />
+          <span style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.25rem',
+            fontSize: '0.75rem',
+            color: 'var(--text-muted-ed)',
+            background: 'var(--ivory-warm)',
+            padding: '0.25rem 0.5rem',
+            borderRadius: '6px',
+          }}>
+            <Hash size={11} />
             {story.storyPoints}
           </span>
           {!editing && (
             <button
               onClick={(e) => { e.stopPropagation(); handleEdit(); }}
-              className="p-1.5 rounded-lg hover:bg-surface-800 text-surface-500 hover:text-primary-400 transition-colors"
+              style={{
+                padding: '0.25rem',
+                borderRadius: '6px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'var(--text-muted-ed)',
+                transition: 'all 0.15s ease',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = 'var(--terracotta)'; e.currentTarget.style.background = 'var(--terracotta-bg)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted-ed)'; e.currentTarget.style.background = 'transparent'; }}
             >
-              <Edit3 size={14} />
+              <Edit3 size={13} />
             </button>
           )}
-          {expanded ? <ChevronUp size={16} className="text-surface-500" /> : <ChevronDown size={16} className="text-surface-500" />}
+          {expanded ? <ChevronUp size={15} color="var(--text-muted-ed)" /> : <ChevronDown size={15} color="var(--text-muted-ed)" />}
         </div>
       </div>
 
       {/* Expanded Content */}
       {expanded && (
-        <div className="px-4 pb-4 border-t border-white/5 pt-4 space-y-4">
+        <div style={{
+          padding: '1rem 1.25rem',
+          borderTop: '1px solid var(--warm-gray-subtle)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+        }}>
           {/* User Story */}
           <div>
-            <p className="text-xs font-medium text-surface-400 uppercase tracking-wider mb-1">User Story</p>
+            <p className="label-section" style={{ marginBottom: '0.375rem' }}>User Story</p>
             {editing ? (
               <textarea
                 value={editData.userStory}
                 onChange={(e) => setEditData({ ...editData, userStory: e.target.value })}
-                className="w-full bg-surface-800 border border-primary-500/30 rounded-lg px-3 py-2 text-white text-sm focus:outline-none resize-none"
+                style={{ ...inputEditStyle, width: '100%', resize: 'none' }}
                 rows={3}
               />
             ) : (
-              <p className="text-surface-200 text-sm italic">"{story.userStory}"</p>
+              <p style={{ color: 'var(--text-body)', fontSize: '0.875rem', fontStyle: 'italic' }}>
+                "{story.userStory}"
+              </p>
             )}
           </div>
 
           {/* Acceptance Criteria */}
           {story.acceptanceCriteria?.length > 0 && (
             <div>
-              <p className="text-xs font-medium text-surface-400 uppercase tracking-wider mb-2">
-                Acceptance Criteria
-              </p>
-              <div className="space-y-2">
+              <p className="label-section" style={{ marginBottom: '0.5rem' }}>Acceptance Criteria</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {story.acceptanceCriteria.map((ac, i) => (
-                  <div key={i} className="bg-surface-900/50 rounded-lg p-3 text-sm">
-                    <p><span className="text-success-400 font-medium">Given</span> <span className="text-surface-200">{ac.given}</span></p>
-                    <p><span className="text-warning-400 font-medium">When</span> <span className="text-surface-200">{ac.when}</span></p>
-                    <p><span className="text-accent-400 font-medium">Then</span> <span className="text-surface-200">{ac.then}</span></p>
+                  <div key={i} style={{
+                    background: 'var(--ivory-warm)',
+                    borderRadius: '10px',
+                    padding: '0.75rem 1rem',
+                    fontSize: '0.875rem',
+                  }}>
+                    <p><span style={{ fontWeight: 600, color: '#16A34A' }}>Given</span> <span style={{ color: 'var(--text-body)' }}>{ac.given}</span></p>
+                    <p><span style={{ fontWeight: 600, color: '#D97706' }}>When</span> <span style={{ color: 'var(--text-body)' }}>{ac.when}</span></p>
+                    <p><span style={{ fontWeight: 600, color: 'var(--terracotta)' }}>Then</span> <span style={{ color: 'var(--text-body)' }}>{ac.then}</span></p>
                   </div>
                 ))}
               </div>
@@ -110,11 +184,17 @@ export default function StoryCard({ story }) {
           {/* Edge Cases */}
           {story.edgeCases?.length > 0 && (
             <div>
-              <p className="text-xs font-medium text-surface-400 uppercase tracking-wider mb-2">Edge Cases</p>
-              <ul className="space-y-1">
+              <p className="label-section" style={{ marginBottom: '0.5rem' }}>Edge Cases</p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
                 {story.edgeCases.map((ec, i) => (
-                  <li key={i} className="text-sm text-surface-300 flex items-start gap-2">
-                    <span className="text-warning-400 mt-1">⚡</span> {ec}
+                  <li key={i} style={{
+                    fontSize: '0.875rem',
+                    color: 'var(--text-body)',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '0.5rem',
+                  }}>
+                    <span style={{ color: '#D97706', marginTop: '0.125rem' }}>⚡</span> {ec}
                   </li>
                 ))}
               </ul>
@@ -123,9 +203,17 @@ export default function StoryCard({ story }) {
 
           {/* Tags */}
           {story.tags?.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>
               {story.tags.map((tag, i) => (
-                <span key={i} className="text-xs px-2 py-0.5 rounded-md bg-surface-800 text-surface-400 border border-white/5">
+                <span key={i} style={{
+                  fontSize: '0.7rem',
+                  padding: '0.125rem 0.5rem',
+                  borderRadius: '6px',
+                  background: 'var(--ivory-warm)',
+                  color: 'var(--text-muted-ed)',
+                  border: '1px solid var(--warm-gray-subtle)',
+                  fontWeight: 500,
+                }}>
                   {tag}
                 </span>
               ))}
@@ -134,32 +222,53 @@ export default function StoryCard({ story }) {
 
           {/* Edit actions */}
           {editing && (
-            <div className="flex items-center gap-3 pt-2">
-              <div className="flex items-center gap-2">
-                <label className="text-xs text-surface-400">Points:</label>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              paddingTop: '0.5rem',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                <label style={{ fontSize: '0.75rem', color: 'var(--text-muted-ed)' }}>Points:</label>
                 <select
                   value={editData.storyPoints}
                   onChange={(e) => setEditData({ ...editData, storyPoints: Number(e.target.value) })}
-                  className="bg-surface-800 border border-white/10 rounded-lg px-2 py-1 text-white text-sm focus:outline-none"
+                  style={{
+                    ...inputEditStyle,
+                    padding: '0.25rem 0.5rem',
+                  }}
                 >
                   {[1, 2, 3, 5, 8, 13, 21].map(p => <option key={p} value={p}>{p}</option>)}
                 </select>
               </div>
-              <div className="flex items-center gap-2">
-                <label className="text-xs text-surface-400">Priority:</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                <label style={{ fontSize: '0.75rem', color: 'var(--text-muted-ed)' }}>Priority:</label>
                 <select
                   value={editData.priority}
                   onChange={(e) => setEditData({ ...editData, priority: e.target.value })}
-                  className="bg-surface-800 border border-white/10 rounded-lg px-2 py-1 text-white text-sm focus:outline-none"
+                  style={{
+                    ...inputEditStyle,
+                    padding: '0.25rem 0.5rem',
+                  }}
                 >
                   {['critical', 'high', 'medium', 'low'].map(p => <option key={p} value={p}>{p}</option>)}
                 </select>
               </div>
-              <div className="flex-1" />
-              <button onClick={() => setEditing(false)} className="p-2 rounded-lg hover:bg-surface-800 text-surface-400">
+              <div style={{ flex: 1 }} />
+              <button
+                onClick={() => setEditing(false)}
+                style={{
+                  padding: '0.375rem',
+                  borderRadius: '8px',
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: 'var(--text-muted-ed)',
+                }}
+              >
                 <X size={16} />
               </button>
-              <button onClick={handleSave} className="btn-glow !py-2 !px-4 text-sm flex items-center gap-1.5">
+              <button onClick={handleSave} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.8125rem' }}>
                 <Check size={14} /> Save
               </button>
             </div>

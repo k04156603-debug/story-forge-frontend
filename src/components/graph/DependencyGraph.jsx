@@ -11,35 +11,47 @@ import '@xyflow/react/dist/style.css';
 import { GitBranch } from 'lucide-react';
 
 const priorityColors = {
-  critical: '#f87171',
-  high: '#fbbf24',
-  medium: '#818cf8',
-  low: '#4ade80',
+  critical: '#DC2626',
+  high: '#D97706',
+  medium: '#0284C7',
+  low: '#16A34A',
 };
 
 const edgeTypeColors = {
-  blocks: '#f87171',
-  depends_on: '#818cf8',
-  related_to: '#64748b',
+  blocks: '#DC2626',
+  depends_on: 'var(--warm-gray)',
+  related_to: 'var(--warm-gray-subtle)',
 };
 
 function CustomNode({ data }) {
   return (
-    <div className="min-w-[180px]">
-      <div className="flex items-center gap-2 mb-1.5">
-        <span className="text-[10px] font-mono text-primary-400 bg-primary-600/20 px-1.5 py-0.5 rounded">
+    <div style={{ minWidth: '180px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.375rem' }}>
+        <span style={{
+          fontSize: '0.625rem',
+          fontFamily: "'SF Mono', 'Fira Code', monospace",
+          color: 'var(--terracotta)',
+          background: 'var(--terracotta-bg)',
+          padding: '0.125rem 0.375rem',
+          borderRadius: '4px',
+          fontWeight: 600,
+        }}>
           {data.storyId}
         </span>
         <span
-          className="w-2 h-2 rounded-full"
-          style={{ backgroundColor: priorityColors[data.priority] || '#818cf8' }}
+          style={{
+            width: '8px',
+            height: '8px',
+            borderRadius: '50%',
+            backgroundColor: priorityColors[data.priority] || '#0284C7'
+          }}
         />
       </div>
-      <p className="text-xs font-medium text-white leading-tight">{data.label}</p>
-      <div className="flex items-center gap-2 mt-1.5">
-        <span className="text-[10px] text-surface-400">{data.featureName}</span>
-        <span className="text-[10px] text-surface-500">•</span>
-        <span className="text-[10px] text-primary-300">{data.storyPoints} pts</span>
+      <p style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--rich-black)', lineHeight: 1.25 }}>{data.label}</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.375rem' }}>
+        <span style={{ fontSize: '0.625rem', color: 'var(--text-muted-ed)' }}>{data.featureName}</span>
+        <span style={{ fontSize: '0.625rem', color: 'var(--text-muted-ed)' }}>•</span>
+        <span style={{ fontSize: '0.625rem', color: 'var(--terracotta)' }}>{data.storyPoints} pts</span>
       </div>
     </div>
   );
@@ -74,11 +86,11 @@ export default function DependencyGraphView({ graph }) {
       type: 'smoothstep',
       animated: e.type === 'blocks',
       style: {
-        stroke: edgeTypeColors[e.type] || '#818cf8',
-        strokeWidth: e.type === 'blocks' ? 2.5 : 1.5,
+        stroke: edgeTypeColors[e.type] || 'var(--warm-gray)',
+        strokeWidth: e.type === 'blocks' ? 2 : 1.5,
       },
-      labelStyle: { fill: '#94a3b8', fontSize: 10 },
-      labelBgStyle: { fill: '#0f172a', fillOpacity: 0.8 },
+      labelStyle: { fill: 'var(--text-muted-ed)', fontSize: 10, fontFamily: 'var(--font-sans)' },
+      labelBgStyle: { fill: '#FFFFFF', fillOpacity: 0.9 },
     }));
   }, [graph]);
 
@@ -87,38 +99,53 @@ export default function DependencyGraphView({ graph }) {
 
   if (!graph || (graph.nodes?.length === 0 && graph.edges?.length === 0)) {
     return (
-      <div className="glass-card p-8 text-center">
-        <GitBranch size={32} className="mx-auto text-surface-500 mb-3" />
-        <p className="text-surface-400">No dependency data available</p>
+      <div style={{
+        background: '#FFFFFF',
+        border: '1px solid var(--warm-gray-subtle)',
+        borderRadius: '14px',
+        padding: '3rem',
+        textAlign: 'center',
+      }}>
+        <GitBranch size={28} color="var(--text-muted-ed)" style={{ margin: '0 auto 0.75rem', display: 'block' }} />
+        <p style={{ color: 'var(--text-muted-ed)', fontSize: '0.9375rem' }}>No dependency data available</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {/* Legend */}
-      <div className="flex items-center gap-6 text-xs text-surface-400">
-        <span className="flex items-center gap-1.5">
-          <span className="w-6 h-0.5 bg-danger-400" style={{ display: 'inline-block' }} />
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '1.5rem',
+        fontSize: '0.75rem',
+        color: 'var(--text-body)',
+        flexWrap: 'wrap',
+      }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+          <span style={{ width: '24px', height: '2px', background: '#DC2626', display: 'inline-block' }} />
           Blocks
         </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-6 h-0.5 bg-primary-400" style={{ display: 'inline-block' }} />
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+          <span style={{ width: '24px', height: '2px', background: 'var(--warm-gray)', display: 'inline-block' }} />
           Depends on
         </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-6 h-0.5 bg-surface-600" style={{ display: 'inline-block' }} />
-          Related to
-        </span>
-        <div className="flex-1" />
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-danger-400" /> Critical</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-warning-400" /> High</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-primary-400" /> Medium</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-success-400" /> Low</span>
+        <div style={{ flex: 1 }} />
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}><span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#DC2626' }} /> Critical</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}><span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#D97706' }} /> High</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}><span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0284C7' }} /> Medium</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}><span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16A34A' }} /> Low</span>
       </div>
 
       {/* Graph */}
-      <div className="glass-card overflow-hidden" style={{ height: '600px' }}>
+      <div style={{
+        height: '600px',
+        background: '#FFFFFF',
+        border: '1px solid var(--warm-gray-subtle)',
+        borderRadius: '14px',
+        overflow: 'hidden',
+      }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -131,14 +158,14 @@ export default function DependencyGraphView({ graph }) {
           maxZoom={2}
           proOptions={{ hideAttribution: true }}
         >
-          <Background color="#1e293b" gap={20} size={1} />
+          <Background color="var(--warm-gray-subtle)" gap={20} size={1} />
           <Controls
-            style={{ borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)', background: '#1e293b' }}
+            style={{ borderRadius: '10px', border: '1px solid var(--warm-gray-subtle)', background: '#FFFFFF' }}
           />
           <MiniMap
-            nodeColor="#4f46e5"
-            maskColor="rgba(15, 23, 42, 0.85)"
-            style={{ borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)', background: '#0f172a' }}
+            nodeColor="var(--ivory-warm)"
+            maskColor="rgba(255, 255, 255, 0.5)"
+            style={{ borderRadius: '10px', border: '1px solid var(--warm-gray-subtle)', background: '#FFFFFF' }}
           />
         </ReactFlow>
       </div>

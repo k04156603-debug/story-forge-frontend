@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, Sparkles, CheckCircle2, LayoutPanelLeft, ListTodo, ShieldCheck, LockKeyhole, Globe, Loader2 } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, CheckCircle2, LayoutPanelLeft, ListTodo, Globe, Loader2, ShieldCheck, LockKeyhole } from 'lucide-react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { authApi } from '../api/client';
 import { toast } from 'react-hot-toast';
@@ -36,190 +36,336 @@ export default function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+    window.location.href = `${import.meta.env.VITE_API_URL || ''}/api/auth/google`;
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '0.875rem 1rem 0.875rem 2.75rem',
+    borderRadius: '12px',
+    background: '#FFFFFF',
+    border: '1px solid var(--warm-gray-subtle)',
+    color: 'var(--rich-black)',
+    fontSize: '0.9375rem',
+    fontFamily: 'var(--font-sans)',
+    outline: 'none',
+    transition: 'border-color 0.15s ease',
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 flex flex-col items-center justify-center p-6 font-sans">
-      <div className="max-w-6xl w-full flex flex-col gap-8">
-        
+    <div style={{
+      minHeight: '100vh',
+      background: 'var(--ivory)',
+      color: 'var(--rich-black)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '2rem',
+      fontFamily: 'var(--font-sans)',
+    }}>
+      <div style={{ maxWidth: '1040px', width: '100%', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+
         {/* Header Logo */}
-        <div className="flex items-center gap-3 self-start px-2">
-          <div className="bg-indigo-500/20 p-2 rounded-xl border border-indigo-500/30">
-            <Sparkles className="w-6 h-6 text-indigo-400" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">Story Forge</h1>
-            <p className="text-xs text-slate-400 font-medium tracking-wide">AI-powered PRD to Agile story converter</p>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingLeft: '0.25rem' }}>
+          <span style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: '1.375rem',
+            fontWeight: 700,
+            color: 'var(--rich-black)',
+            letterSpacing: '-0.02em',
+          }}>
+            Story Forge
+          </span>
+          <span style={{
+            fontSize: '0.7rem',
+            fontWeight: 600,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: 'var(--text-muted-ed)',
+            marginLeft: '0.25rem',
+          }}>
+            PRD → AGILE
+          </span>
         </div>
 
-        {/* Main Content Card */}
-        <div className="grid lg:grid-cols-2 bg-[#0f172a]/40 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm">
-          
+        {/* Main Card */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          background: '#FFFFFF',
+          border: '1px solid var(--warm-gray-subtle)',
+          borderRadius: '16px',
+          overflow: 'hidden',
+        }}>
+
           {/* Left Panel */}
-          <div className="p-12 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-indigo-500/5 to-transparent">
-            <div className="absolute top-0 left-0 w-64 h-64 bg-indigo-500/10 blur-[120px] -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-500/10 blur-[120px] translate-x-1/2 translate-y-1/2" />
-            <div className="relative z-10">
-              <div className="mb-12 relative flex justify-center items-center h-48">
-                <div className="absolute left-10 top-0 w-32 h-40 bg-indigo-900/40 border border-indigo-500/30 rounded-2xl p-4 backdrop-blur-md transform -rotate-6 shadow-xl">
-                  <div className="text-[10px] font-bold text-indigo-400 mb-2 uppercase tracking-tighter">PRD</div>
-                  <div className="space-y-2">
-                    <div className="h-1.5 w-full bg-indigo-500/30 rounded-full" />
-                    <div className="h-1.5 w-4/5 bg-indigo-500/30 rounded-full" />
-                    <div className="h-1.5 w-full bg-indigo-500/30 rounded-full" />
+          <div style={{
+            padding: '3.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            borderRight: '1px solid var(--warm-gray-subtle)',
+          }}>
+            <h2 style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: '2.25rem',
+              fontWeight: 800,
+              lineHeight: 1.1,
+              marginBottom: '1.5rem',
+              color: 'var(--rich-black)',
+              letterSpacing: '-0.025em',
+            }}>
+              Transform PRDs<br />
+              into <span style={{ color: 'var(--terracotta)', fontStyle: 'italic' }}>Agile stories</span>
+            </h2>
+            <p style={{
+              fontSize: '1rem',
+              color: 'var(--text-body)',
+              marginBottom: '2.5rem',
+              maxWidth: '380px',
+              lineHeight: 1.6,
+            }}>
+              Upload your PRD. Our AI analyzes, structures, and converts it into actionable user stories in seconds.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              {[
+                { icon: <LayoutPanelLeft size={18} color="var(--terracotta)" />, text: "AI-powered analysis" },
+                { icon: <ListTodo size={18} color="var(--terracotta)" />, text: "Structured user stories" },
+                { icon: <Globe size={18} color="var(--terracotta)" />, text: "Dependency mapping" }
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
+                  <div style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '8px',
+                    background: 'var(--terracotta-bg)',
+                    border: '1px solid rgba(196, 113, 59, 0.12)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    {item.icon}
                   </div>
+                  <span style={{ fontWeight: 500, color: 'var(--rich-black)', fontSize: '0.9375rem' }}>{item.text}</span>
                 </div>
-                <div className="z-20 w-16 h-1 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full opacity-50 relative">
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 border-t-2 border-r-2 border-blue-500 rotate-45" />
-                </div>
-                <div className="absolute right-10 bottom-0 w-32 h-40 bg-blue-900/40 border border-blue-500/30 rounded-2xl p-4 backdrop-blur-md transform rotate-6 shadow-xl">
-                  <div className="flex items-center gap-1.5 mb-3">
-                    <CheckCircle2 className="w-3 h-3 text-blue-400" />
-                    <div className="h-1.5 w-12 bg-blue-400/30 rounded-full" />
-                  </div>
-                  <div className="flex items-center gap-1.5 mb-3">
-                    <CheckCircle2 className="w-3 h-3 text-blue-400" />
-                    <div className="h-1.5 w-10 bg-blue-400/30 rounded-full" />
-                  </div>
-                  <div className="space-y-2 mt-6">
-                    <div className="h-1.5 w-full bg-blue-500/30 rounded-full" />
-                    <div className="h-1.5 w-3/4 bg-blue-500/30 rounded-full" />
-                  </div>
-                </div>
-                <Sparkles className="absolute top-4 right-20 w-4 h-4 text-indigo-400/40" />
-                <div className="absolute bottom-10 left-32 w-2 h-2 rounded-full bg-blue-400/30 animate-pulse" />
-              </div>
-              <h2 className="text-4xl font-bold mb-6 leading-tight">
-                Transform PRDs <br /> 
-                into <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Agile stories</span>
-              </h2>
-              <p className="text-slate-400 text-lg mb-10 max-w-sm leading-relaxed">
-                Upload your PRD. Our AI analyzes, structures, and converts it into actionable user stories in seconds.
-              </p>
-              <div className="space-y-5">
-                {[
-                  { icon: <LayoutPanelLeft className="w-5 h-5 text-indigo-400" />, text: "AI-powered analysis" },
-                  { icon: <ListTodo className="w-5 h-5 text-blue-400" />, text: "Structured user stories" },
-                  { icon: <Globe className="w-5 h-5 text-indigo-400" />, text: "Dependency mapping" }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <div className="bg-slate-800/50 p-2 rounded-lg border border-slate-700/50">{item.icon}</div>
-                    <span className="text-slate-300 font-medium">{item.text}</span>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
 
           {/* Right Panel */}
-          <div className="p-12 lg:border-l border-slate-800 bg-[#0f172a]/20 backdrop-blur-lg">
-            <div className="max-w-md mx-auto">
-              <div className="mb-10 text-center lg:text-left">
-                <h3 className="text-3xl font-bold text-white mb-2">Welcome back</h3>
-                <p className="text-slate-400">Sign in to continue to Story Forge</p>
+          <div style={{ padding: '3.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '400px', margin: '0 auto', width: '100%' }}>
+              <div style={{ marginBottom: '2rem' }}>
+                <h3 style={{
+                  fontFamily: 'var(--font-serif)',
+                  fontSize: '1.5rem',
+                  fontWeight: 700,
+                  color: 'var(--rich-black)',
+                  marginBottom: '0.375rem',
+                }}>
+                  Welcome back
+                </h3>
+                <p style={{ fontSize: '0.9375rem', color: 'var(--text-body)' }}>
+                  Sign in to continue to Story Forge
+                </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Email address</label>
-                  <div className="relative group">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
-                    <input 
-                      type="email" 
+                  <label style={{
+                    display: 'block',
+                    fontSize: '0.8125rem',
+                    fontWeight: 500,
+                    color: 'var(--rich-black)',
+                    marginBottom: '0.5rem',
+                  }}>
+                    Email address
+                  </label>
+                  <div style={{ position: 'relative' }}>
+                    <Mail size={18} style={{
+                      position: 'absolute',
+                      left: '0.875rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      color: 'var(--text-muted-ed)',
+                    }} />
+                    <input
+                      type="email"
                       placeholder="you@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-slate-900/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                      style={inputStyle}
                       required
+                      onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
+                      onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <div className="flex justify-between mb-2">
-                    <label className="text-sm font-medium text-slate-300">Password</label>
-                    <Link to="/forgot-password" className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                    <label style={{ fontSize: '0.8125rem', fontWeight: 500, color: 'var(--rich-black)' }}>Password</label>
+                    <Link to="/forgot-password" style={{
+                      fontSize: '0.8125rem',
+                      color: 'var(--terracotta)',
+                      textDecoration: 'none',
+                      fontWeight: 500,
+                    }}>
                       Forgot password?
                     </Link>
                   </div>
-                  <div className="relative group">
-                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
-                    <input 
+                  <div style={{ position: 'relative' }}>
+                    <Lock size={18} style={{
+                      position: 'absolute',
+                      left: '0.875rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      color: 'var(--text-muted-ed)',
+                    }} />
+                    <input
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-slate-900/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-12 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                      style={{ ...inputStyle, paddingRight: '2.75rem' }}
                       required
+                      onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
+                      onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
                     />
-                    <button 
+                    <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                      style={{
+                        position: 'absolute',
+                        right: '0.875rem',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: 'var(--text-muted-ed)',
+                        padding: 0,
+                      }}
                     >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
                 </div>
 
-                <button 
+                <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
-                  style={{ minHeight: '56px' }}
+                  className="btn-primary"
+                  style={{
+                    width: '100%',
+                    justifyContent: 'center',
+                    padding: '0.875rem',
+                    fontSize: '0.9375rem',
+                    marginTop: '0.5rem',
+                  }}
                 >
                   {isLoading ? (
-                    <div className="flex flex-col items-center justify-center gap-0.5 py-2">
-                      <div className="flex items-center gap-2">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Signing in...</span>
-                      </div>
-                      <span className="text-xs opacity-60 font-normal">Server is waking up, please wait</span>
-                    </div>
+                    <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.125rem' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Loader2 size={16} className="animate-spin" />
+                        Signing in…
+                      </span>
+                      <span style={{ fontSize: '0.7rem', opacity: 0.6, fontWeight: 400 }}>Server is waking up, please wait</span>
+                    </span>
                   ) : (
-                    <span className="py-4 block">Sign in</span>
+                    'Sign in'
                   )}
                 </button>
               </form>
 
-              <div className="relative my-8">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-800" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-[#0f172a] px-3 text-slate-500">or continue with</span>
-                </div>
+              {/* Divider */}
+              <div style={{ position: 'relative', margin: '2rem 0' }}>
+                <hr className="divider-editorial" />
+                <span style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  background: '#FFFFFF',
+                  padding: '0 0.75rem',
+                  fontSize: '0.75rem',
+                  fontWeight: 500,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: 'var(--text-muted-ed)',
+                }}>
+                  or continue with
+                </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Google Button — fully wired up */}
+              {/* OAuth Buttons */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                 <button
                   onClick={handleGoogleLogin}
-                  className="flex items-center justify-center gap-3 bg-slate-900/50 hover:bg-slate-800 border border-slate-800 rounded-xl py-3 text-sm font-medium transition-colors"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    background: '#FFFFFF',
+                    border: '1px solid var(--warm-gray-subtle)',
+                    borderRadius: '12px',
+                    padding: '0.75rem',
+                    fontSize: '0.8125rem',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                    fontFamily: 'var(--font-sans)',
+                    color: 'var(--rich-black)',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--ivory-warm)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; }}
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <svg width="18" height="18" viewBox="0 0 24 24">
                     <path fill="#EA4335" d="M12.48 10.92v3.28h7.84c-.24 1.84-.909 3.16-2.09 4.34-1.2 1.2-3.07 2.48-6.13 2.48-4.75 0-8.49-3.74-8.49-8.49s3.74-8.49 8.49-8.49c2.57 0 4.41.97 5.79 2.29l2.31-2.31c-1.95-1.85-4.47-3-8.1-3C5.48 1 0 6.48 0 13.04S5.48 25.08 12.08 25.08c3.58 0 6.3-1.18 8.4-3.32 2.15-2.15 2.84-5.21 2.84-7.67 0-.74-.06-1.44-.18-2.12H12.48z" />
                   </svg>
-                  Continue with Google
+                  Google
                 </button>
-
-                {/* Microsoft Button — coming soon */}
                 <button
                   disabled
-                  className="flex items-center justify-center gap-3 bg-slate-900/50 border border-slate-800 rounded-xl py-3 text-sm font-medium opacity-50 cursor-not-allowed"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    background: '#FFFFFF',
+                    border: '1px solid var(--warm-gray-subtle)',
+                    borderRadius: '12px',
+                    padding: '0.75rem',
+                    fontSize: '0.8125rem',
+                    fontWeight: 500,
+                    cursor: 'not-allowed',
+                    opacity: 0.4,
+                    fontFamily: 'var(--font-sans)',
+                    color: 'var(--rich-black)',
+                  }}
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 23 23">
-                    <path fill="#f3f3f3" d="M0 0h11.002v11.002H0zM11.998 0H23v11.002H11.998zM0 11.998h11.002V23H0zM11.998 11.998H23V23H11.998z" />
+                  <svg width="18" height="18" viewBox="0 0 23 23">
+                    <path fill="#888" d="M0 0h11.002v11.002H0zM11.998 0H23v11.002H11.998zM0 11.998h11.002V23H0zM11.998 11.998H23V23H11.998z" />
                   </svg>
-                  Continue with Microsoft
+                  Microsoft
                 </button>
               </div>
 
-              <p className="mt-8 text-center text-slate-400 text-sm">
+              <p style={{
+                marginTop: '2rem',
+                textAlign: 'center',
+                fontSize: '0.875rem',
+                color: 'var(--text-body)',
+              }}>
                 Don't have an account?{' '}
-                <Link to="/signup" className="text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+                <Link to="/signup" style={{
+                  color: 'var(--terracotta)',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                }}>
                   Sign up
                 </Link>
               </p>
@@ -228,24 +374,48 @@ export default function Login() {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col md:flex-row items-center justify-between px-2 gap-6 pb-4">
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            <div className="flex items-center gap-2 text-slate-400 text-xs font-medium">
-              <ShieldCheck className="w-4 h-4 text-emerald-500/60" />
-              Enterprise-grade security
-            </div>
-            <div className="flex items-center gap-2 text-slate-400 text-xs font-medium">
-              <LockKeyhole className="w-4 h-4 text-emerald-500/60" />
-              Your data is protected
-            </div>
-            <div className="flex items-center gap-2 text-slate-400 text-xs font-medium">
-              <Sparkles className="w-4 h-4 text-emerald-500/60" />
-              Privacy first
-            </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          paddingBottom: '1rem',
+        }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1.5rem' }}>
+            {[
+              { icon: <ShieldCheck size={14} color="var(--terracotta)" />, text: "Enterprise-grade security" },
+              { icon: <LockKeyhole size={14} color="var(--terracotta)" />, text: "Your data is protected" },
+            ].map((item, i) => (
+              <div key={i} style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.375rem',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                color: 'var(--text-muted-ed)',
+              }}>
+                {item.icon}
+                {item.text}
+              </div>
+            ))}
           </div>
-          <p className="text-slate-500 text-xs">© 2024 Story Forge. All rights reserved.</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted-ed)' }}>© 2024 Story Forge. All rights reserved.</p>
         </div>
       </div>
+
+      {/* Responsive: collapse grid on mobile */}
+      <style>{`
+        @media (max-width: 768px) {
+          div[style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+          }
+          div[style*="border-right: 1px solid var(--warm-gray-subtle)"] {
+            border-right: none !important;
+            border-bottom: 1px solid var(--warm-gray-subtle) !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

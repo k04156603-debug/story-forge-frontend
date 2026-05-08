@@ -55,76 +55,164 @@ export default function Results() {
     }
   };
 
+  const tabStyle = (isActive) => ({
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '0.5rem',
+    padding: '0.75rem',
+    borderRadius: '10px',
+    fontSize: '0.875rem',
+    fontWeight: 500,
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.15s ease',
+    fontFamily: 'var(--font-sans)',
+    background: isActive ? '#FFFFFF' : 'transparent',
+    color: isActive ? 'var(--rich-black)' : 'var(--text-muted-ed)',
+    boxShadow: isActive ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
+  });
+
+  const exportBtnStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.375rem',
+    padding: '0.5rem 0.875rem',
+    borderRadius: '100px',
+    fontSize: '0.8125rem',
+    fontWeight: 500,
+    border: '1px solid var(--warm-gray-subtle)',
+    background: '#FFFFFF',
+    color: 'var(--rich-black)',
+    cursor: 'pointer',
+    transition: 'all 0.15s ease',
+    fontFamily: 'var(--font-sans)',
+  };
+
   return (
-    <div className="space-y-6">
+    <div style={{ maxWidth: '960px', margin: '0 auto', padding: '2rem 2rem 6rem' }}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: '2rem',
+        flexWrap: 'wrap',
+        gap: '1rem',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button
             onClick={() => navigate('/')}
-            className="p-2 rounded-xl hover:bg-surface-800 text-surface-400 hover:text-white transition-colors"
+            style={{
+              padding: '0.5rem',
+              borderRadius: '10px',
+              background: 'transparent',
+              border: '1px solid var(--warm-gray-subtle)',
+              cursor: 'pointer',
+              color: 'var(--text-muted-ed)',
+              transition: 'all 0.15s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ivory-warm)'; e.currentTarget.style.color = 'var(--rich-black)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted-ed)'; }}
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={18} />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-white">{currentPrd?.title || 'Results'}</h1>
-            <div className="flex items-center gap-3 mt-1 text-sm text-surface-400">
-              <span className="flex items-center gap-1.5">
-                <FileText size={14} />
+            <h1 style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              color: 'var(--rich-black)',
+              letterSpacing: '-0.01em',
+            }}>
+              {currentPrd?.title || 'Results'}
+            </h1>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              marginTop: '0.25rem',
+              fontSize: '0.8125rem',
+              color: 'var(--text-muted-ed)',
+            }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                <FileText size={13} />
                 {currentPrd?.fileType?.toUpperCase()}
               </span>
-              <span>•</span>
+              <span style={{ opacity: 0.4 }}>·</span>
               <span>{storyStats?.total || 0} stories</span>
-              <span>•</span>
+              <span style={{ opacity: 0.4 }}>·</span>
               <span>{storyStats?.totalPoints || 0} total points</span>
-              <span>•</span>
+              <span style={{ opacity: 0.4 }}>·</span>
               <span>{qualityIssues?.length || 0} quality issues</span>
             </div>
           </div>
         </div>
 
         {/* Export buttons */}
-        <div className="flex items-center gap-2">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <button
             onClick={() => handleExport('csv')}
             disabled={exporting}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface-800 hover:bg-surface-700 text-surface-300 text-sm transition-colors border border-white/5"
+            style={exportBtnStyle}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ivory-warm)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; }}
           >
-            <Download size={14} /> CSV
+            <Download size={13} /> CSV
           </button>
           <button
             onClick={() => handleExport('markdown')}
             disabled={exporting}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface-800 hover:bg-surface-700 text-surface-300 text-sm transition-colors border border-white/5"
+            style={exportBtnStyle}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ivory-warm)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; }}
           >
-            <Download size={14} /> MD
+            <Download size={13} /> MD
           </button>
           <button
             onClick={() => handleExport('jira')}
             disabled={exporting}
-            className="btn-glow !py-2 !px-3 text-sm flex items-center gap-1.5"
+            className="btn-primary"
+            style={{ padding: '0.5rem 0.875rem', fontSize: '0.8125rem' }}
           >
-            {exporting ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
+            {exporting ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
             Jira
           </button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex rounded-xl bg-surface-900/60 p-1 border border-white/5">
+      <div style={{
+        display: 'flex',
+        borderRadius: '12px',
+        background: 'var(--ivory-warm)',
+        padding: '4px',
+        marginBottom: '2rem',
+        border: '1px solid var(--warm-gray-subtle)',
+      }}>
         {tabs.map(({ id: tabId, label, icon: Icon }) => (
           <button
             key={tabId}
             onClick={() => setActiveTab(tabId)}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all
-              ${activeTab === tabId
-                ? 'bg-primary-600/20 text-primary-300 shadow-md border border-primary-500/20'
-                : 'text-surface-400 hover:text-surface-200'}`}
+            style={tabStyle(activeTab === tabId)}
           >
-            <Icon size={16} />
+            <Icon size={15} />
             {label}
             {tabId === 'quality' && qualityIssues?.length > 0 && (
-              <span className="ml-1 text-xs bg-warning-500/20 text-warning-400 px-1.5 py-0.5 rounded-full">
+              <span style={{
+                marginLeft: '0.25rem',
+                fontSize: '0.7rem',
+                background: '#FFFBEB',
+                color: '#D97706',
+                padding: '1px 6px',
+                borderRadius: '100px',
+                border: '1px solid #FDE68A',
+                fontWeight: 600,
+              }}>
                 {qualityIssues.length}
               </span>
             )}
@@ -136,11 +224,16 @@ export default function Results() {
       <div>
         {activeTab === 'stories' && (
           storiesLoading ? (
-            <div className="space-y-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[1, 2, 3, 4, 5].map(i => (
-                <div key={i} className="glass-card p-5">
-                  <div className="skeleton h-5 w-64 mb-2" />
-                  <div className="skeleton h-4 w-48" />
+                <div key={i} style={{
+                  background: '#FFFFFF',
+                  border: '1px solid var(--warm-gray-subtle)',
+                  borderRadius: '14px',
+                  padding: '1.25rem',
+                }}>
+                  <div className="skeleton" style={{ height: '18px', width: '250px', marginBottom: '0.5rem' }} />
+                  <div className="skeleton" style={{ height: '14px', width: '180px' }} />
                 </div>
               ))}
             </div>
@@ -151,11 +244,16 @@ export default function Results() {
 
         {activeTab === 'quality' && (
           analysisLoading ? (
-            <div className="space-y-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[1, 2, 3].map(i => (
-                <div key={i} className="glass-card p-5">
-                  <div className="skeleton h-5 w-48 mb-2" />
-                  <div className="skeleton h-4 w-80" />
+                <div key={i} style={{
+                  background: '#FFFFFF',
+                  border: '1px solid var(--warm-gray-subtle)',
+                  borderRadius: '14px',
+                  padding: '1.25rem',
+                }}>
+                  <div className="skeleton" style={{ height: '18px', width: '200px', marginBottom: '0.5rem' }} />
+                  <div className="skeleton" style={{ height: '14px', width: '320px' }} />
                 </div>
               ))}
             </div>

@@ -76,6 +76,7 @@ const useStore = create((set, get) => ({
           progress: prd.processingProgress || 0,
           message: prd.processingMessage || 'Processing...',
           status: prd.status,
+          error: prd.error
         },
       });
       return prd;
