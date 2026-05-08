@@ -13,11 +13,24 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Response interceptor - unwrap data
+// Response interceptor - unwrap data + handle 401
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    const status = error.response?.status;
     const message = error.response?.data?.message || error.message;
+
+    // If session revoked or token invalid — clear storage and redirect to login
+    if (status === 401) {
+      localStorage.removeItem('sf_token');
+      localStorage.removeItem('sf_user');
+      // Only redirect if not already on login/signup page
+      if (!window.location.pathname.includes('/login') &&
+          !window.location.pathname.includes('/signup')) {
+        window.location.href = '/login';
+      }
+    }
+
     return Promise.reject(new Error(message));
   }
 );
