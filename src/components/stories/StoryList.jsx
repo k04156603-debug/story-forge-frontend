@@ -15,8 +15,8 @@ export default function StoryList({ groupedStories, stats }) {
   if (!groupedStories || groupedStories.length === 0) {
     return (
       <div style={{
-        background: '#FFFFFF',
-        border: '1px solid var(--warm-gray-subtle)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-main)',
         borderRadius: '14px',
         padding: '3rem',
         textAlign: 'center',

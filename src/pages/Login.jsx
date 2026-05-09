@@ -43,13 +43,13 @@ export default function Login() {
     width: '100%',
     padding: '0.875rem 1rem 0.875rem 2.75rem',
     borderRadius: '12px',
-    background: '#FFFFFF',
-    border: '1px solid var(--warm-gray-subtle)',
-    color: 'var(--rich-black)',
+    background: 'var(--bg-card)',
+    border: '1px solid var(--border-main)',
+    color: 'var(--text-main)',
     fontSize: '0.9375rem',
     fontFamily: 'var(--font-sans)',
     outline: 'none',
-    transition: 'border-color 0.15s ease',
+    transition: 'all 0.2s ease',
   };
 
   return (
@@ -93,8 +93,8 @@ export default function Login() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          background: '#FFFFFF',
-          border: '1px solid var(--warm-gray-subtle)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-main)',
           borderRadius: '16px',
           overflow: 'hidden',
         }}>
@@ -288,7 +288,7 @@ export default function Login() {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  background: '#FFFFFF',
+                  background: 'var(--bg-card)',
                   padding: '0 0.75rem',
                   fontSize: '0.75rem',
                   fontWeight: 500,
@@ -309,8 +309,8 @@ export default function Login() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '0.5rem',
-                    background: '#FFFFFF',
-                    border: '1px solid var(--warm-gray-subtle)',
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border-main)',
                     borderRadius: '12px',
                     padding: '0.75rem',
                     fontSize: '0.8125rem',
@@ -318,10 +318,10 @@ export default function Login() {
                     cursor: 'pointer',
                     transition: 'all 0.15s ease',
                     fontFamily: 'var(--font-sans)',
-                    color: 'var(--rich-black)',
+                    color: 'var(--text-main)',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--ivory-warm)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-card)'; }}
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24">
                     <path fill="#EA4335" d="M12.48 10.92v3.28h7.84c-.24 1.84-.909 3.16-2.09 4.34-1.2 1.2-3.07 2.48-6.13 2.48-4.75 0-8.49-3.74-8.49-8.49s3.74-8.49 8.49-8.49c2.57 0 4.41.97 5.79 2.29l2.31-2.31c-1.95-1.85-4.47-3-8.1-3C5.48 1 0 6.48 0 13.04S5.48 25.08 12.08 25.08c3.58 0 6.3-1.18 8.4-3.32 2.15-2.15 2.84-5.21 2.84-7.67 0-.74-.06-1.44-.18-2.12H12.48z" />
@@ -335,8 +335,8 @@ export default function Login() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '0.5rem',
-                    background: '#FFFFFF',
-                    border: '1px solid var(--warm-gray-subtle)',
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border-main)',
                     borderRadius: '12px',
                     padding: '0.75rem',
                     fontSize: '0.8125rem',
@@ -344,7 +344,7 @@ export default function Login() {
                     cursor: 'not-allowed',
                     opacity: 0.4,
                     fontFamily: 'var(--font-sans)',
-                    color: 'var(--rich-black)',
+                    color: 'var(--text-main)',
                   }}
                 >
                   <svg width="18" height="18" viewBox="0 0 23 23">

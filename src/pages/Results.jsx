@@ -159,8 +159,8 @@ export default function Results() {
             onClick={() => handleExport('csv')}
             disabled={exporting}
             style={exportBtnStyle}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ivory-warm)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-card)'; }}
           >
             <Download size={13} /> CSV
           </button>
@@ -168,8 +168,8 @@ export default function Results() {
             onClick={() => handleExport('markdown')}
             disabled={exporting}
             style={exportBtnStyle}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ivory-warm)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-card)'; }}
           >
             <Download size={13} /> MD
           </button>
@@ -226,8 +226,8 @@ export default function Results() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[1, 2, 3, 4, 5].map(i => (
                 <div key={i} style={{
-                  background: '#FFFFFF',
-                  border: '1px solid var(--warm-gray-subtle)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-main)',
                   borderRadius: '14px',
                   padding: '1.25rem',
                 }}>
@@ -246,8 +246,8 @@ export default function Results() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[1, 2, 3].map(i => (
                 <div key={i} style={{
-                  background: '#FFFFFF',
-                  border: '1px solid var(--warm-gray-subtle)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-main)',
                   borderRadius: '14px',
                   padding: '1.25rem',
                 }}>

@@ -50,13 +50,13 @@ export default function Signup() {
     width: '100%',
     padding: '0.875rem 1rem 0.875rem 2.75rem',
     borderRadius: '12px',
-    background: '#FFFFFF',
-    border: '1px solid var(--warm-gray-subtle)',
-    color: 'var(--rich-black)',
+    background: 'var(--bg-card)',
+    border: '1px solid var(--border-main)',
+    color: 'var(--text-main)',
     fontSize: '0.9375rem',
     fontFamily: 'var(--font-sans)',
     outline: 'none',
-    transition: 'border-color 0.15s ease',
+    transition: 'all 0.2s ease',
   };
 
   return (
@@ -100,8 +100,8 @@ export default function Signup() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          background: '#FFFFFF',
-          border: '1px solid var(--warm-gray-subtle)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-main)',
           borderRadius: '16px',
           overflow: 'hidden',
         }}>

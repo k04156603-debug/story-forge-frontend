@@ -61,7 +61,7 @@ export default function Settings() {
     width: '18px',
     height: '18px',
     borderRadius: '50%',
-    background: '#FFFFFF',
+    background: 'var(--bg-card)',
     position: 'absolute',
     top: '3px',
     left: isActive ? '23px' : '3px',
