@@ -69,9 +69,9 @@ export default function Results() {
     cursor: 'pointer',
     transition: 'all 0.15s ease',
     fontFamily: 'var(--font-sans)',
-    background: isActive ? '#FFFFFF' : 'transparent',
-    color: isActive ? 'var(--rich-black)' : 'var(--text-muted-ed)',
-    boxShadow: isActive ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
+    background: isActive ? 'var(--bg-card)' : 'transparent',
+    color: isActive ? 'var(--text-main)' : 'var(--text-muted)',
+    boxShadow: isActive ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
   });
 
   const exportBtnStyle = {
@@ -82,9 +82,9 @@ export default function Results() {
     borderRadius: '100px',
     fontSize: '0.8125rem',
     fontWeight: 500,
-    border: '1px solid var(--warm-gray-subtle)',
-    background: '#FFFFFF',
-    color: 'var(--rich-black)',
+    border: '1px solid var(--border-main)',
+    background: 'var(--bg-card)',
+    color: 'var(--text-main)',
     cursor: 'pointer',
     transition: 'all 0.15s ease',
     fontFamily: 'var(--font-sans)',
@@ -116,8 +116,8 @@ export default function Results() {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ivory-warm)'; e.currentTarget.style.color = 'var(--rich-black)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted-ed)'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)'; e.currentTarget.style.color = 'var(--text-main)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)'; }}
           >
             <ArrowLeft size={18} />
           </button>
@@ -126,7 +126,7 @@ export default function Results() {
               fontFamily: 'var(--font-serif)',
               fontSize: '1.5rem',
               fontWeight: 700,
-              color: 'var(--rich-black)',
+              color: 'var(--text-main)',
               letterSpacing: '-0.01em',
             }}>
               {currentPrd?.title || 'Results'}
@@ -137,7 +137,7 @@ export default function Results() {
               gap: '0.5rem',
               marginTop: '0.25rem',
               fontSize: '0.8125rem',
-              color: 'var(--text-muted-ed)',
+              color: 'var(--text-muted)',
             }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                 <FileText size={13} />
@@ -186,13 +186,12 @@ export default function Results() {
       </div>
 
       {/* Tabs */}
-      <div style={{
         display: 'flex',
         borderRadius: '12px',
-        background: 'var(--ivory-warm)',
+        background: 'var(--bg-surface)',
         padding: '4px',
         marginBottom: '2rem',
-        border: '1px solid var(--warm-gray-subtle)',
+        border: '1px solid var(--border-main)',
       }}>
         {tabs.map(({ id: tabId, label, icon: Icon }) => (
           <button
@@ -206,11 +205,11 @@ export default function Results() {
               <span style={{
                 marginLeft: '0.25rem',
                 fontSize: '0.7rem',
-                background: '#FFFBEB',
+                background: 'rgba(217, 119, 6, 0.1)',
                 color: '#D97706',
                 padding: '1px 6px',
                 borderRadius: '100px',
-                border: '1px solid #FDE68A',
+                border: '1px solid rgba(217, 119, 6, 0.2)',
                 fontWeight: 600,
               }}>
                 {qualityIssues.length}

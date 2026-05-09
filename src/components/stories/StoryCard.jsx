@@ -31,11 +31,11 @@ export default function StoryCard({ story }) {
   };
 
   const inputEditStyle = {
-    background: '#FFFFFF',
-    border: '1px solid var(--warm-gray)',
+    background: 'var(--bg-surface)',
+    border: '1px solid var(--border-main)',
     borderRadius: '10px',
     padding: '0.5rem 0.75rem',
-    color: 'var(--rich-black)',
+    color: 'var(--text-main)',
     fontSize: '0.875rem',
     fontFamily: 'var(--font-sans)',
     outline: 'none',
@@ -43,14 +43,14 @@ export default function StoryCard({ story }) {
 
   return (
     <div style={{
-      background: '#FFFFFF',
-      border: '1px solid var(--warm-gray-subtle)',
-      borderRadius: '14px',
+      background: 'var(--bg-card)',
+      border: '1px solid var(--border-main)',
+      borderRadius: '16px',
       overflow: 'hidden',
       transition: 'border-color 0.15s ease',
     }}
-    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--warm-gray)'; }}
-    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--warm-gray-subtle)'; }}
+    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; }}
+    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-main)'; }}
     >
       {/* Header */}
       <div
@@ -85,8 +85,8 @@ export default function StoryCard({ story }) {
             />
           ) : (
             <h4 style={{
-              fontWeight: 500,
-              color: 'var(--rich-black)',
+              fontWeight: 600,
+              color: 'var(--text-main)',
               fontSize: '0.9375rem',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -104,8 +104,8 @@ export default function StoryCard({ story }) {
             alignItems: 'center',
             gap: '0.25rem',
             fontSize: '0.75rem',
-            color: 'var(--text-muted-ed)',
-            background: 'var(--ivory-warm)',
+            color: 'var(--text-muted)',
+            background: 'var(--bg-surface)',
             padding: '0.25rem 0.5rem',
             borderRadius: '6px',
           }}>
@@ -138,7 +138,7 @@ export default function StoryCard({ story }) {
       {expanded && (
         <div style={{
           padding: '1rem 1.25rem',
-          borderTop: '1px solid var(--warm-gray-subtle)',
+          borderTop: '1px solid var(--border-main)',
           display: 'flex',
           flexDirection: 'column',
           gap: '1rem',
@@ -167,7 +167,7 @@ export default function StoryCard({ story }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {story.acceptanceCriteria.map((ac, i) => (
                   <div key={i} style={{
-                    background: 'var(--ivory-warm)',
+                    background: 'var(--bg-surface)',
                     borderRadius: '10px',
                     padding: '0.75rem 1rem',
                     fontSize: '0.875rem',
@@ -209,9 +209,9 @@ export default function StoryCard({ story }) {
                   fontSize: '0.7rem',
                   padding: '0.125rem 0.5rem',
                   borderRadius: '6px',
-                  background: 'var(--ivory-warm)',
-                  color: 'var(--text-muted-ed)',
-                  border: '1px solid var(--warm-gray-subtle)',
+                  background: 'var(--bg-surface)',
+                  color: 'var(--text-muted)',
+                  border: '1px solid var(--border-main)',
                   fontWeight: 500,
                 }}>
                   {tag}
