@@ -56,7 +56,7 @@ export default function Login() {
     <div style={{
       minHeight: '100vh',
       background: 'var(--bg-app)',
-      color: 'var(--rich-black)',
+      color: 'var(--text-main)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -72,7 +72,7 @@ export default function Login() {
             fontFamily: 'var(--font-serif)',
             fontSize: '1.375rem',
             fontWeight: 700,
-            color: 'var(--rich-black)',
+            color: 'var(--text-main)',
             letterSpacing: '-0.02em',
           }}>
             Story Forge
@@ -82,7 +82,7 @@ export default function Login() {
             fontWeight: 600,
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            color: 'var(--text-muted-ed)',
+            color: 'var(--text-muted)',
             marginLeft: '0.25rem',
           }}>
             PRD → AGILE
@@ -105,7 +105,7 @@ export default function Login() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            borderRight: '1px solid var(--warm-gray-subtle)',
+            borderRight: '1px solid var(--border-main)',
           }}>
             <h2 style={{
               fontFamily: 'var(--font-serif)',
@@ -113,7 +113,7 @@ export default function Login() {
               fontWeight: 800,
               lineHeight: 1.1,
               marginBottom: '1.5rem',
-              color: 'var(--rich-black)',
+              color: 'var(--text-main)',
               letterSpacing: '-0.025em',
             }}>
               Transform PRDs<br />
@@ -148,7 +148,7 @@ export default function Login() {
                   }}>
                     {item.icon}
                   </div>
-                  <span style={{ fontWeight: 500, color: 'var(--rich-black)', fontSize: '0.9375rem' }}>{item.text}</span>
+                  <span style={{ fontWeight: 500, color: 'var(--text-main)', fontSize: '0.9375rem' }}>{item.text}</span>
                 </div>
               ))}
             </div>
@@ -162,7 +162,7 @@ export default function Login() {
                   fontFamily: 'var(--font-serif)',
                   fontSize: '1.5rem',
                   fontWeight: 700,
-                  color: 'var(--rich-black)',
+                  color: 'var(--text-main)',
                   marginBottom: '0.375rem',
                 }}>
                   Welcome back
@@ -178,7 +178,7 @@ export default function Login() {
                     display: 'block',
                     fontSize: '0.8125rem',
                     fontWeight: 500,
-                    color: 'var(--rich-black)',
+                    color: 'var(--text-main)',
                     marginBottom: '0.5rem',
                   }}>
                     Email address
@@ -189,7 +189,7 @@ export default function Login() {
                       left: '0.875rem',
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      color: 'var(--text-muted-ed)',
+                      color: 'var(--text-muted)',
                     }} />
                     <input
                       type="email"
@@ -206,7 +206,7 @@ export default function Login() {
 
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                    <label style={{ fontSize: '0.8125rem', fontWeight: 500, color: 'var(--rich-black)' }}>Password</label>
+                    <label style={{ fontSize: '0.8125rem', fontWeight: 500, color: 'var(--text-main)' }}>Password</label>
                     <Link to="/forgot-password" style={{
                       fontSize: '0.8125rem',
                       color: 'var(--terracotta)',
@@ -222,7 +222,7 @@ export default function Login() {
                       left: '0.875rem',
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      color: 'var(--text-muted-ed)',
+                      color: 'var(--text-muted)',
                     }} />
                     <input
                       type={showPassword ? "text" : "password"}
@@ -245,7 +245,7 @@ export default function Login() {
                         background: 'none',
                         border: 'none',
                         cursor: 'pointer',
-                        color: 'var(--text-muted-ed)',
+                        color: 'var(--text-muted)',
                         padding: 0,
                       }}
                     >
@@ -294,7 +294,7 @@ export default function Login() {
                   fontWeight: 500,
                   letterSpacing: '0.06em',
                   textTransform: 'uppercase',
-                  color: 'var(--text-muted-ed)',
+                  color: 'var(--text-muted)',
                 }}>
                   or continue with
                 </span>
@@ -393,14 +393,14 @@ export default function Login() {
                 gap: '0.375rem',
                 fontSize: '0.75rem',
                 fontWeight: 500,
-                color: 'var(--text-muted-ed)',
+                color: 'var(--text-muted)',
               }}>
                 {item.icon}
                 {item.text}
               </div>
             ))}
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted-ed)' }}>© 2024 Story Forge. All rights reserved.</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>© 2024 Story Forge. All rights reserved.</p>
         </div>
       </div>
 
