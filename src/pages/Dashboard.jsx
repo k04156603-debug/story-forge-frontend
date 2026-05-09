@@ -145,9 +145,10 @@ export default function Dashboard() {
             style={{
               background: 'var(--bg-card)',
               border: '1px solid var(--border-main)',
-              borderRadius: '14px',
+              borderRadius: '16px',
               padding: '5rem 2rem',
               textAlign: 'center',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
             }}
           >
             {/* Minimal document icon */}
@@ -160,10 +161,10 @@ export default function Dashboard() {
                 xmlns="http://www.w3.org/2000/svg"
                 style={{ margin: '0 auto', display: 'block' }}
               >
-                <rect x="10" y="6" width="28" height="36" rx="3" stroke="var(--warm-gray)" strokeWidth="1.5" fill="none" />
-                <line x1="16" y1="16" x2="32" y2="16" stroke="var(--warm-gray)" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="16" y1="22" x2="28" y2="22" stroke="var(--warm-gray)" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="16" y1="28" x2="24" y2="28" stroke="var(--warm-gray)" strokeWidth="1.5" strokeLinecap="round" />
+                <rect x="10" y="6" width="28" height="36" rx="3" stroke="var(--text-muted)" strokeWidth="1.5" fill="none" />
+                <line x1="16" y1="16" x2="32" y2="16" stroke="var(--text-muted)" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="16" y1="22" x2="28" y2="22" stroke="var(--text-muted)" strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="16" y1="28" x2="24" y2="28" stroke="var(--text-muted)" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </div>
             <h3 style={{
@@ -189,7 +190,7 @@ export default function Dashboard() {
             <Link
               to="/upload"
               className="btn-primary"
-              style={{ textDecoration: 'none' }}
+              style={{ textDecoration: 'none', padding: '0.75rem 1.5rem' }}
             >
               Start with a PRD
             </Link>
