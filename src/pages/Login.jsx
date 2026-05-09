@@ -23,6 +23,16 @@ export default function Login() {
       const token = response?.token || response?.data?.token;
       if (token) {
         localStorage.setItem('sf_token', token);
+        // Save user details if returned by API
+        if (response?.user || response?.data?.user) {
+          const user = response?.user || response?.data?.user;
+          localStorage.setItem('sf_user_name', user.name);
+          localStorage.setItem('sf_user_email', user.email);
+        } else {
+          // Fallback to email if user object is missing
+          localStorage.setItem('sf_user_email', email);
+          localStorage.setItem('sf_user_name', email.split('@')[0]);
+        }
         toast.success('Successfully logged in!');
         navigate('/');
       } else {

@@ -16,8 +16,8 @@ export default function Layout() {
 
     // Simple decoding or fetch if needed
     setUserData({
-      name: localStorage.getItem('sf_user_name') || 'Kabir',
-      email: localStorage.getItem('sf_user_email') || 'kabirtyagi747@gmail.com'
+      name: localStorage.getItem('sf_user_name') || 'Guest User',
+      email: localStorage.getItem('sf_user_email') || 'Not logged in'
     });
   }, []);
 

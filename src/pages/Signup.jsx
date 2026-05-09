@@ -36,6 +36,8 @@ export default function Signup() {
 
       if (response.success) {
         localStorage.setItem('sf_token', response.token);
+        localStorage.setItem('sf_user_name', formData.name);
+        localStorage.setItem('sf_user_email', formData.email);
         toast.success('Account created successfully!');
         navigate('/');
       }
