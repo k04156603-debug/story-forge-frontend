@@ -275,7 +275,32 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <button
+                    onClick={(e) => handleDelete(e, prd._id)}
+                    style={{
+                      padding: '0.625rem',
+                      borderRadius: '10px',
+                      background: 'rgba(239, 68, 68, 0.08)',
+                      border: '1px solid rgba(239, 68, 68, 0.15)',
+                      cursor: 'pointer',
+                      color: '#EF4444',
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)';
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = 'rgba(239, 68, 68, 0.08)';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                  >
+                    <Trash2 size={16} />
+                  </button>
                   <span
                     className="badge"
                     style={{
@@ -283,38 +308,13 @@ export default function Dashboard() {
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '0.375rem',
+                      minWidth: '100px',
+                      justifyContent: 'center',
                     }}
                   >
                     {getStatusIcon(prd.status)}
                     {prd.status}
                   </span>
-                  <button
-                    onClick={(e) => handleDelete(e, prd._id)}
-                    style={{
-                      opacity: prd.status === 'failed' ? 1 : 0,
-                      padding: '0.5rem',
-                      borderRadius: '10px',
-                      background: prd.status === 'failed' ? 'rgba(220, 38, 38, 0.1)' : 'transparent',
-                      border: 'none',
-                      cursor: 'pointer',
-                      color: prd.status === 'failed' ? '#EF4444' : 'var(--text-muted)',
-                      transition: 'all 0.2s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                    className={prd.status === 'failed' ? '' : 'group-hover:opacity-100'}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.background = 'rgba(220, 38, 38, 0.2)';
-                      e.currentTarget.style.color = '#EF4444';
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.background = prd.status === 'failed' ? 'rgba(220, 38, 38, 0.1)' : 'transparent';
-                      e.currentTarget.style.color = prd.status === 'failed' ? '#EF4444' : 'var(--text-muted)';
-                    }}
-                  >
-                    <Trash2 size={16} />
-                  </button>
                   <ArrowRight size={16} color="var(--text-muted)" />
                 </div>
               </div>
