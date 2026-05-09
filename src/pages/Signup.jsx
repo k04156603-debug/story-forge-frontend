@@ -34,15 +34,24 @@ export default function Signup() {
         password: formData.password
       });
 
-      if (response.success) {
-        localStorage.setItem('sf_token', response.token);
-        localStorage.setItem('sf_user_name', formData.name);
-        localStorage.setItem('sf_user_email', formData.email);
+      // The server returns { success: true, token, data: { user } }
+      const token = response?.token || response?.data?.token;
+      
+      if (token) {
+        localStorage.setItem('sf_token', token);
+        
+        // Save user details from response or fallback to form data
+        const user = response?.user || response?.data?.user;
+        localStorage.setItem('sf_user_name', user?.name || formData.name);
+        localStorage.setItem('sf_user_email', user?.email || formData.email);
+        
         toast.success('Account created successfully!');
         navigate('/');
+      } else {
+        toast.error('Signup failed. Please try again.');
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to sign up');
+      toast.error(err?.message || 'Failed to sign up');
     } finally {
       setIsLoading(false);
     }
