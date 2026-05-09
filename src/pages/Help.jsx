@@ -13,30 +13,6 @@ export default function Help() {
       desc: 'We use industry-standard encryption for all your personal data.',
       icon: FileText,
       color: '#10B981'
-    },
-    {
-      title: 'How to contact teacher?',
-      desc: 'Use the Chat section to message your respective subject teachers.',
-      icon: User,
-      color: '#F59E0B'
-    },
-    {
-      title: 'Can I change my class?',
-      desc: 'Class changes are restricted but can be requested from the Account view.',
-      icon: RefreshCcw,
-      color: '#EF4444'
-    },
-    {
-      title: 'How to join live classes?',
-      desc: 'Links for live classes appear in your batch dashboard when active.',
-      icon: GraduationCap,
-      color: '#8B5CF6'
-    },
-    {
-      title: 'What are Streaks/XP?',
-      desc: 'Consistent daily usage builds streaks and earns XP for ranking.',
-      icon: Ticket,
-      color: '#EC4899'
     }
   ];
 
@@ -120,34 +96,9 @@ export default function Help() {
           );
         })}
       </div>
-
-      {/* Footer Support Actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-        <div className="card-editorial animate-fade-in-up" style={{ animationDelay: '0.4s', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <div>
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>Facing an issue?</h3>
-            <p style={{ fontSize: '0.875rem', color: 'var(--text-body)' }}>Contact our support team and we will get back to you within 24 hours.</p>
-          </div>
-          <button className="btn-primary" style={{ justifyContent: 'center', padding: '0.875rem' }}>
-            <MessageSquare size={18} />
-            Contact Support
-          </button>
-        </div>
-
-        <div className="card-editorial animate-fade-in-up" style={{ animationDelay: '0.5s', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <div>
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>Existing Requests</h3>
-            <p style={{ fontSize: '0.875rem', color: 'var(--text-body)' }}>Check the status of your previous support tickets and inquiries.</p>
-          </div>
-          <button className="btn-secondary" style={{ justifyContent: 'center', padding: '0.875rem' }}>
-            <Ticket size={18} />
-            View All Tickets
-          </button>
-        </div>
-      </div>
       
       {/* Email Contact */}
-      <div className="animate-fade-in-up" style={{ textAlign: 'center', marginTop: '4rem', animationDelay: '0.6s' }}>
+      <div className="animate-fade-in-up" style={{ textAlign: 'center', marginTop: '4rem', animationDelay: '0.2s' }}>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
           <Mail size={16} />
           Can't find what you're looking for? Email us at <span style={{ color: 'var(--accent)', fontWeight: 600 }}>support@storyforge.com</span>
