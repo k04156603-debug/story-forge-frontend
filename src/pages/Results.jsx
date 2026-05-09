@@ -186,6 +186,7 @@ export default function Results() {
       </div>
 
       {/* Tabs */}
+      <div style={{
         display: 'flex',
         borderRadius: '12px',
         background: 'var(--bg-surface)',

@@ -204,6 +204,7 @@ export default function QualityPanel({ issues, summary }) {
                         background: 'transparent',
                         border: 'none',
                         cursor: 'pointer',
+                      }}
                       onMouseEnter={e => { e.currentTarget.style.color = '#16A34A'; e.currentTarget.style.background = 'rgba(22, 163, 74, 0.1)'; }}
                       onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent'; }}
                     >

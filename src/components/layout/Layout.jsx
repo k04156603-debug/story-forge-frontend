@@ -32,7 +32,6 @@ export default function Layout() {
     { path: '/', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/account', label: 'Account', icon: User },
     { path: '/settings', label: 'Settings', icon: Settings },
-    { path: '/guide', label: 'Guide', icon: BookOpen },
     { path: '/help', label: 'Help', icon: HelpCircle },
   ];
 

@@ -8,7 +8,6 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Settings from './pages/Settings';
 import Account from './pages/Account';
-import Guide from './pages/Guide';
 import Help from './pages/Help';
 import AuthCallback from './pages/AuthCallback';
 import { useEffect } from 'react';
@@ -53,7 +52,6 @@ export default function App() {
           <Route path="/results/:id" element={<Results />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/guide" element={<Guide />} />
           <Route path="/help" element={<Help />} />
         </Route>
       </Routes>
