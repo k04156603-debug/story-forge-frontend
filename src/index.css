@@ -25,7 +25,19 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-[data-theme="dark"],
+[data-theme="dark"] {
+  --bg-app: #0F0F0D;
+  --bg-card: #1A1A18;
+  --bg-surface: #242422;
+  --bg-terracotta: #2D1D14;
+  --text-main: #F7F4EE;
+  --text-body: #C5C2BB;
+  --text-muted: #7E7C76;
+  --accent: #D48654;
+  --border-main: #333330;
+  --border-subtle: #242422;
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg-app: #0F0F0D;

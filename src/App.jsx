@@ -11,9 +11,24 @@ import Account from './pages/Account';
 import Guide from './pages/Guide';
 import Help from './pages/Help';
 import AuthCallback from './pages/AuthCallback';
+import { useEffect } from 'react';
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('sf_token');
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('sf_theme') || 'system';
+    const applyTheme = (currentTheme) => {
+      if (currentTheme === 'system') {
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+      }
+    };
+    applyTheme(savedTheme);
+  }, []);
+
   if (!token) return <Navigate to="/login" replace />;
   return children;
 }
