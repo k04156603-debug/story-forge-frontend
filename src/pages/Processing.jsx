@@ -58,9 +58,9 @@ export default function Processing() {
         padding: '2rem',
       }}>
         <div style={{
-          background: '#FFFFFF',
-          border: '1px solid var(--warm-gray-subtle)',
-          borderRadius: '14px',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-main)',
+          borderRadius: '16px',
           padding: '4rem 3rem',
           textAlign: 'center',
           maxWidth: '480px',
@@ -83,7 +83,7 @@ export default function Processing() {
             fontFamily: 'var(--font-serif)',
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: 'var(--rich-black)',
+            color: 'var(--text-main)',
             marginBottom: '0.5rem',
           }}>
             Processing Failed
@@ -94,9 +94,9 @@ export default function Processing() {
             marginBottom: '2rem',
             fontWeight: 500,
             padding: '0.75rem',
-            background: '#FFF1F2',
+            background: 'rgba(220, 38, 38, 0.05)',
             borderRadius: '8px',
-            border: '1px solid #FECACA'
+            border: '1px solid rgba(220, 38, 38, 0.2)'
           }}>
             {processingStatus?.error || message}
           </p>
@@ -125,13 +125,13 @@ export default function Processing() {
             width: '80px',
             height: '80px',
             borderRadius: '50%',
-            background: 'var(--ivory-warm)',
-            border: '1px solid var(--warm-gray-subtle)',
+            background: 'var(--bg-surface)',
+            border: '1px solid var(--border-main)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-            <Brain size={32} color="var(--terracotta)" className="animate-pulse" />
+            <Brain size={32} color="var(--accent)" className="animate-pulse" />
           </div>
         </div>
 
@@ -143,20 +143,20 @@ export default function Processing() {
             alignItems: 'center',
             marginBottom: '0.5rem',
           }}>
-            <span style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--rich-black)' }}>{message}</span>
-            <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--terracotta)' }}>{progress}%</span>
+            <span style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-main)' }}>{message}</span>
+            <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--accent)' }}>{progress}%</span>
           </div>
           <div style={{
             height: '4px',
             borderRadius: '2px',
-            background: 'var(--ivory-warm)',
+            background: 'var(--bg-surface)',
             overflow: 'hidden',
           }}>
             <div
               style={{
                 height: '100%',
                 borderRadius: '2px',
-                background: 'var(--terracotta)',
+                background: 'var(--accent)',
                 transition: 'width 1s ease-out',
                 width: `${progress}%`,
               }}
@@ -166,9 +166,9 @@ export default function Processing() {
 
         {/* Pipeline stages */}
         <div style={{
-          background: '#FFFFFF',
-          border: '1px solid var(--warm-gray-subtle)',
-          borderRadius: '14px',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-main)',
+          borderRadius: '16px',
           padding: '1.5rem',
         }}>
           {stages.map((stage, i) => {
@@ -200,28 +200,28 @@ export default function Processing() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  background: isDone ? '#F0FDF4' : isActive ? 'var(--ivory-warm)' : 'var(--ivory-warm)',
-                  border: `1px solid ${isDone ? '#BBF7D0' : 'var(--warm-gray-subtle)'}`,
+                  background: isDone ? 'rgba(22, 163, 74, 0.08)' : isActive ? 'var(--bg-surface)' : 'var(--bg-surface)',
+                  border: `1px solid ${isDone ? 'rgba(22, 163, 74, 0.2)' : 'var(--border-subtle)'}`,
                   flexShrink: 0,
                 }}>
                   {isDone ? (
                     <CheckCircle2 size={16} color="#16A34A" />
                   ) : isActive ? (
-                    <Loader2 size={16} color="var(--terracotta)" className="animate-spin" />
+                    <Loader2 size={16} color="var(--accent)" className="animate-spin" />
                   ) : (
-                    <Icon size={16} color="var(--text-muted-ed)" />
+                    <Icon size={16} color="var(--text-muted)" />
                   )}
                 </div>
                 <div>
                   <p style={{
                     fontSize: '0.875rem',
                     fontWeight: 500,
-                    color: isActive ? 'var(--rich-black)' : 'var(--text-body)',
+                    color: isActive ? 'var(--text-main)' : 'var(--text-body)',
                   }}>
                     {stage.label}
                   </p>
-                  {isDone && <p style={{ fontSize: '0.75rem', color: '#16A34A' }}>Complete</p>}
-                  {isActive && <p style={{ fontSize: '0.75rem', color: 'var(--terracotta)' }}>In progress…</p>}
+                  {isDone && <p style={{ fontSize: '0.75rem', color: '#16A34A', fontWeight: 600 }}>Complete</p>}
+                  {isActive && <p style={{ fontSize: '0.75rem', color: 'var(--accent)', fontWeight: 600 }}>In progress…</p>}
                 </div>
               </div>
             );
@@ -231,7 +231,7 @@ export default function Processing() {
         <p style={{
           textAlign: 'center',
           fontSize: '0.8125rem',
-          color: 'var(--text-muted-ed)',
+          color: 'var(--text-muted)',
           marginTop: '1.5rem',
         }}>
           This may take 1–5 minutes depending on PRD size
