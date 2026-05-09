@@ -129,8 +129,8 @@ export default function Dashboard() {
                 key={i}
                 style={{
                   padding: '1.5rem',
-                  background: '#FFFFFF',
-                  border: '1px solid var(--warm-gray-subtle)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-main)',
                   borderRadius: '14px',
                 }}
               >
@@ -143,8 +143,8 @@ export default function Dashboard() {
           /* Empty state */
           <div
             style={{
-              background: '#FFFFFF',
-              border: '1px solid var(--warm-gray-subtle)',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-main)',
               borderRadius: '14px',
               padding: '5rem 2rem',
               textAlign: 'center',
@@ -170,7 +170,7 @@ export default function Dashboard() {
               fontFamily: 'var(--font-serif)',
               fontSize: '1.25rem',
               fontWeight: 600,
-              color: 'var(--rich-black)',
+              color: 'var(--text-main)',
               marginBottom: '0.5rem',
             }}>
               No PRDs yet
@@ -207,25 +207,25 @@ export default function Dashboard() {
                 }}
                 style={{
                   padding: '1.25rem 1.5rem',
-                  background: '#141414',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-main)',
                   borderRadius: '16px',
                   cursor: 'pointer',
                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
                 }}
                 className="group"
                 onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                  e.currentTarget.style.background = '#1C1C1C';
+                  e.currentTarget.style.borderColor = 'var(--accent)';
+                  e.currentTarget.style.background = 'var(--bg-surface)';
                   e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-                  e.currentTarget.style.background = '#141414';
+                  e.currentTarget.style.borderColor = 'var(--border-main)';
+                  e.currentTarget.style.background = 'var(--bg-card)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
@@ -234,8 +234,8 @@ export default function Dashboard() {
                     width: '40px',
                     height: '40px',
                     borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-subtle)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -247,7 +247,7 @@ export default function Dashboard() {
                     <h3 style={{
                       fontWeight: 600,
                       fontSize: '0.9375rem',
-                      color: '#FFFFFF',
+                      color: 'var(--text-main)',
                       marginBottom: '0.25rem',
                     }}>
                       {prd.title}
@@ -257,7 +257,7 @@ export default function Dashboard() {
                       alignItems: 'center',
                       gap: '0.5rem',
                       fontSize: '0.8125rem',
-                      color: 'rgba(255, 255, 255, 0.5)',
+                      color: 'var(--text-muted)',
                     }}>
                       <span>{prd.fileType?.toUpperCase()}</span>
                       <span style={{ opacity: 0.4 }}>·</span>
@@ -296,7 +296,7 @@ export default function Dashboard() {
                       background: prd.status === 'failed' ? 'rgba(220, 38, 38, 0.1)' : 'transparent',
                       border: 'none',
                       cursor: 'pointer',
-                      color: prd.status === 'failed' ? '#EF4444' : 'rgba(255, 255, 255, 0.4)',
+                      color: prd.status === 'failed' ? '#EF4444' : 'var(--text-muted)',
                       transition: 'all 0.2s ease',
                       display: 'flex',
                       alignItems: 'center',
@@ -309,12 +309,12 @@ export default function Dashboard() {
                     }}
                     onMouseLeave={e => {
                       e.currentTarget.style.background = prd.status === 'failed' ? 'rgba(220, 38, 38, 0.1)' : 'transparent';
-                      e.currentTarget.style.color = prd.status === 'failed' ? '#EF4444' : 'rgba(255, 255, 255, 0.4)';
+                      e.currentTarget.style.color = prd.status === 'failed' ? '#EF4444' : 'var(--text-muted)';
                     }}
                   >
                     <Trash2 size={16} />
                   </button>
-                  <ArrowRight size={16} color="rgba(255, 255, 255, 0.3)" />
+                  <ArrowRight size={16} color="var(--text-muted)" />
                 </div>
               </div>
             ))}
