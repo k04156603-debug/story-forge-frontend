@@ -4,13 +4,18 @@ import { authApi } from '../api/client';
 import toast from 'react-hot-toast';
 
 export default function Account() {
-  const [userData, setUserData] = useState({ name: 'Kabir', email: 'kabirtyagi747@gmail.com' });
+  const [userData, setUserData] = useState({ name: 'Guest User', email: 'Not logged in' });
   const [passwords, setPasswords] = useState({ current: '', next: '', confirm: '' });
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Mock user data or fetch from API
+    // Sync with session storage
+    setUserData({
+      name: localStorage.getItem('sf_user_name') || 'Guest User',
+      email: localStorage.getItem('sf_user_email') || 'Not logged in'
+    });
+
     const fetchSessions = async () => {
       try {
         const res = await authApi.getSessions();
