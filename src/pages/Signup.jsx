@@ -62,7 +62,7 @@ export default function Signup() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'var(--ivory)',
+      background: 'var(--bg-app)',
       color: 'var(--rich-black)',
       display: 'flex',
       flexDirection: 'column',
@@ -147,7 +147,7 @@ export default function Signup() {
                     width: '36px',
                     height: '36px',
                     borderRadius: '8px',
-                    background: 'var(--terracotta-bg)',
+                    background: 'var(--bg-surface)',
                     border: '1px solid rgba(196, 113, 59, 0.12)',
                     display: 'flex',
                     alignItems: 'center',

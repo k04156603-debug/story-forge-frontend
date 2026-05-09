@@ -15,6 +15,11 @@ import { useEffect } from 'react';
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('sf_token');
 
+  if (!token) return <Navigate to="/login" replace />;
+  return children;
+}
+
+export default function App() {
   useEffect(() => {
     const savedTheme = localStorage.getItem('sf_theme') || 'system';
     const applyTheme = (currentTheme) => {
@@ -26,13 +31,18 @@ function ProtectedRoute({ children }) {
       }
     };
     applyTheme(savedTheme);
+
+    // Also listen for system changes if set to system
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => {
+      if ((localStorage.getItem('sf_theme') || 'system') === 'system') {
+        applyTheme('system');
+      }
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  if (!token) return <Navigate to="/login" replace />;
-  return children;
-}
-
-export default function App() {
   return (
     <BrowserRouter>
       <Routes>
