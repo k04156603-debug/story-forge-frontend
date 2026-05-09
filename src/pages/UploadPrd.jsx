@@ -73,9 +73,9 @@ export default function UploadPrd() {
     cursor: 'pointer',
     transition: 'all 0.15s ease',
     fontFamily: 'var(--font-sans)',
-    background: isActive ? '#FFFFFF' : 'transparent',
-    color: isActive ? 'var(--rich-black)' : 'var(--text-muted-ed)',
-    boxShadow: isActive ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
+    background: isActive ? 'var(--bg-card)' : 'transparent',
+    color: isActive ? 'var(--text-main)' : 'var(--text-muted)',
+    boxShadow: isActive ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
   });
 
   return (
@@ -89,7 +89,7 @@ export default function UploadPrd() {
           fontFamily: 'var(--font-serif)',
           fontSize: '2rem',
           fontWeight: 700,
-          color: 'var(--rich-black)',
+          color: 'var(--text-main)',
           letterSpacing: '-0.02em',
           marginBottom: '0.75rem',
         }}>
@@ -112,10 +112,10 @@ export default function UploadPrd() {
         style={{
           display: 'flex',
           borderRadius: '12px',
-          background: 'var(--ivory-warm)',
+          background: 'var(--bg-surface)',
           padding: '4px',
           marginBottom: '2rem',
-          border: '1px solid var(--warm-gray-subtle)',
+          border: '1px solid var(--border-main)',
         }}
       >
         <button onClick={() => setMode('upload')} style={tabStyle(mode === 'upload')}>
@@ -132,10 +132,10 @@ export default function UploadPrd() {
           display: 'block',
           fontSize: '0.8125rem',
           fontWeight: 500,
-          color: 'var(--rich-black)',
+          color: 'var(--text-main)',
           marginBottom: '0.5rem',
         }}>
-          Title <span style={{ color: 'var(--text-muted-ed)', fontWeight: 400 }}>(optional)</span>
+          Title <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(optional)</span>
         </label>
         <input
           type="text"
@@ -146,16 +146,16 @@ export default function UploadPrd() {
             width: '100%',
             padding: '0.75rem 1rem',
             borderRadius: '12px',
-            background: '#FFFFFF',
-            border: '1px solid var(--warm-gray-subtle)',
-            color: 'var(--rich-black)',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-main)',
+            color: 'var(--text-main)',
             fontSize: '0.9375rem',
             fontFamily: 'var(--font-sans)',
             outline: 'none',
             transition: 'border-color 0.15s ease',
           }}
-          onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
-          onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
+          onFocus={e => { e.target.style.borderColor = 'var(--accent)'; }}
+          onBlur={e => { e.target.style.borderColor = 'var(--border-main)'; }}
         />
       </div>
 
@@ -166,8 +166,8 @@ export default function UploadPrd() {
             {file ? (
               <div style={{
                 padding: '1.25rem 1.5rem',
-                background: '#FFFFFF',
-                border: '1px solid var(--warm-gray-subtle)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-main)',
                 borderRadius: '14px',
                 display: 'flex',
                 alignItems: 'center',
@@ -187,8 +187,8 @@ export default function UploadPrd() {
                     <FileText size={20} color="var(--text-muted-ed)" />
                   </div>
                   <div>
-                    <p style={{ fontWeight: 500, color: 'var(--rich-black)', fontSize: '0.9375rem' }}>{file.name}</p>
-                    <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted-ed)' }}>{(file.size / 1024).toFixed(1)} KB</p>
+                    <p style={{ fontWeight: 500, color: 'var(--text-main)', fontSize: '0.9375rem' }}>{file.name}</p>
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{(file.size / 1024).toFixed(1)} KB</p>
                   </div>
                 </div>
                 <button
@@ -213,15 +213,15 @@ export default function UploadPrd() {
                 {...getRootProps()}
                 style={{
                   padding: '3.5rem 2rem',
-                  background: '#FFFFFF',
-                  border: `2px dashed ${isDragActive ? 'var(--terracotta)' : 'var(--warm-gray)'}`,
-                  borderRadius: '14px',
+                  background: 'var(--bg-card)',
+                  border: `2px dashed ${isDragActive ? 'var(--accent)' : 'var(--border-main)'}`,
+                  borderRadius: '16px',
                   textAlign: 'center',
                   cursor: 'pointer',
                   transition: 'all 0.15s ease',
                 }}
-                onMouseEnter={e => { if (!isDragActive) e.currentTarget.style.borderColor = 'var(--warm-gray)'; e.currentTarget.style.background = 'var(--ivory-warm)'; }}
-                onMouseLeave={e => { if (!isDragActive) e.currentTarget.style.borderColor = 'var(--warm-gray-subtle)'; e.currentTarget.style.background = '#FFFFFF'; }}
+                onMouseEnter={e => { if (!isDragActive) e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.background = 'var(--bg-surface)'; }}
+                onMouseLeave={e => { if (!isDragActive) e.currentTarget.style.borderColor = 'var(--border-main)'; e.currentTarget.style.background = 'var(--bg-card)'; }}
               >
                 <input {...getInputProps()} />
                 <div style={{
@@ -229,18 +229,18 @@ export default function UploadPrd() {
                   height: '52px',
                   margin: '0 auto 1rem',
                   borderRadius: '12px',
-                  background: 'var(--ivory-warm)',
-                  border: '1px solid var(--warm-gray-subtle)',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-subtle)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                  <Upload size={22} color="var(--text-muted-ed)" />
+                  <Upload size={22} color="var(--text-muted)" />
                 </div>
-                <p style={{ fontWeight: 500, color: 'var(--rich-black)', marginBottom: '0.25rem' }}>
+                <p style={{ fontWeight: 500, color: 'var(--text-main)', marginBottom: '0.25rem' }}>
                   {isDragActive ? 'Drop your file here' : 'Drag & drop your PRD file'}
                 </p>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted-ed)' }}>
+                <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
                   or click to browse · PDF, DOCX, MD supported
                 </p>
               </div>
@@ -252,7 +252,7 @@ export default function UploadPrd() {
               display: 'block',
               fontSize: '0.8125rem',
               fontWeight: 500,
-              color: 'var(--rich-black)',
+              color: 'var(--text-main)',
               marginBottom: '0.5rem',
             }}>
               PRD Content
@@ -266,9 +266,9 @@ export default function UploadPrd() {
                 width: '100%',
                 padding: '1rem',
                 borderRadius: '14px',
-                background: '#FFFFFF',
-                border: '1px solid var(--warm-gray-subtle)',
-                color: 'var(--rich-black)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-main)',
+                color: 'var(--text-main)',
                 fontSize: '0.9375rem',
                 fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace",
                 lineHeight: 1.7,
@@ -276,8 +276,8 @@ export default function UploadPrd() {
                 resize: 'vertical',
                 transition: 'border-color 0.15s ease',
               }}
-              onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
-              onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
+              onFocus={e => { e.target.style.borderColor = 'var(--accent)'; }}
+              onBlur={e => { e.target.style.borderColor = 'var(--border-main)'; }}
             />
             <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted-ed)', marginTop: '0.5rem' }}>
               {content.length} characters · Minimum 50 required
