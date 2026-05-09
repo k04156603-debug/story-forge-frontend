@@ -207,23 +207,26 @@ export default function Dashboard() {
                 }}
                 style={{
                   padding: '1.25rem 1.5rem',
-                  background: '#FFFFFF',
-                  border: '1px solid var(--warm-gray-subtle)',
-                  borderRadius: '14px',
+                  background: '#141414',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderRadius: '16px',
                   cursor: 'pointer',
-                  transition: 'all 0.15s ease',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
                 }}
                 className="group"
                 onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'var(--warm-gray)';
-                  e.currentTarget.style.background = 'var(--ivory-warm)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                  e.currentTarget.style.background = '#1C1C1C';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'var(--warm-gray-subtle)';
-                  e.currentTarget.style.background = '#FFFFFF';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.background = '#141414';
+                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -231,8 +234,8 @@ export default function Dashboard() {
                     width: '40px',
                     height: '40px',
                     borderRadius: '10px',
-                    background: 'var(--ivory-warm)',
-                    border: '1px solid var(--warm-gray-subtle)',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -244,7 +247,7 @@ export default function Dashboard() {
                     <h3 style={{
                       fontWeight: 600,
                       fontSize: '0.9375rem',
-                      color: 'var(--rich-black)',
+                      color: '#FFFFFF',
                       marginBottom: '0.25rem',
                     }}>
                       {prd.title}
@@ -254,7 +257,7 @@ export default function Dashboard() {
                       alignItems: 'center',
                       gap: '0.5rem',
                       fontSize: '0.8125rem',
-                      color: 'var(--text-muted-ed)',
+                      color: 'rgba(255, 255, 255, 0.5)',
                     }}>
                       <span>{prd.fileType?.toUpperCase()}</span>
                       <span style={{ opacity: 0.4 }}>·</span>
@@ -287,28 +290,31 @@ export default function Dashboard() {
                   <button
                     onClick={(e) => handleDelete(e, prd._id)}
                     style={{
-                      opacity: 0,
-                      padding: '0.375rem',
-                      borderRadius: '8px',
-                      background: 'transparent',
+                      opacity: prd.status === 'failed' ? 1 : 0,
+                      padding: '0.5rem',
+                      borderRadius: '10px',
+                      background: prd.status === 'failed' ? 'rgba(220, 38, 38, 0.1)' : 'transparent',
                       border: 'none',
                       cursor: 'pointer',
-                      color: 'var(--text-muted-ed)',
-                      transition: 'all 0.15s ease',
+                      color: prd.status === 'failed' ? '#EF4444' : 'rgba(255, 255, 255, 0.4)',
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
-                    className="group-hover:opacity-100"
+                    className={prd.status === 'failed' ? '' : 'group-hover:opacity-100'}
                     onMouseEnter={e => {
-                      e.currentTarget.style.background = '#FEF2F2';
-                      e.currentTarget.style.color = '#DC2626';
+                      e.currentTarget.style.background = 'rgba(220, 38, 38, 0.2)';
+                      e.currentTarget.style.color = '#EF4444';
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.color = 'var(--text-muted-ed)';
+                      e.currentTarget.style.background = prd.status === 'failed' ? 'rgba(220, 38, 38, 0.1)' : 'transparent';
+                      e.currentTarget.style.color = prd.status === 'failed' ? '#EF4444' : 'rgba(255, 255, 255, 0.4)';
                     }}
                   >
-                    <Trash2 size={15} />
+                    <Trash2 size={16} />
                   </button>
-                  <ArrowRight size={16} color="var(--warm-gray)" />
+                  <ArrowRight size={16} color="rgba(255, 255, 255, 0.3)" />
                 </div>
               </div>
             ))}
