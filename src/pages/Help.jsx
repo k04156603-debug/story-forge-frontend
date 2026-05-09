@@ -101,7 +101,7 @@ export default function Help() {
       <div className="animate-fade-in-up" style={{ textAlign: 'center', marginTop: '4rem', animationDelay: '0.2s' }}>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
           <Mail size={16} />
-          Can't find what you're looking for? Email us at <span style={{ color: 'var(--accent)', fontWeight: 600 }}>support@storyforge.com</span>
+          Can't find what you're looking for? Email us at <a href="mailto:BITSGroup_102@outlook.com,k04156603@gmail.com" style={{ color: 'var(--accent)', fontWeight: 600, textDecoration: 'none' }}>BITSGroup_102@outlook.com</a> and <a href="mailto:k04156603@gmail.com" style={{ color: 'var(--accent)', fontWeight: 600, textDecoration: 'none' }}>k04156603@gmail.com</a>
         </p>
       </div>
     </div>
