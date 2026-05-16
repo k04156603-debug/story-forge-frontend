@@ -62,7 +62,7 @@ html {
 }
 
 body {
-  background-color: var(--bg-app);
+  background-color: #1a1a2e !important; /* TEMPORARY BLUE TO VERIFY DEPLOYMENT */
   color: var(--text-main);
   font-family: var(--font-sans);
   min-height: 100vh;
