@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL || ''}/api`,
+  baseURL: `${import.meta.env.VITE_API_URL || 'https://story-forge-backend.onrender.com'}/api`,
   timeout: 300000,
   headers: { 'Content-Type': 'application/json' },
 });
