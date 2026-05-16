@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, KeyRound, ArrowRight, Loader2, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, ShieldCheck, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authApi } from '../api/client';
 import { toast } from 'react-hot-toast';
@@ -161,7 +161,7 @@ export default function ForgotPassword() {
         {step === 2 && (
           <form onSubmit={handleVerifyOTP}>
             <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
-              <KeyRound size={18} style={{
+              <ShieldCheck size={18} style={{
                 position: 'absolute',
                 left: '1rem',
                 top: '50%',
