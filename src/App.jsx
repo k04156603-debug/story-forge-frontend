@@ -50,6 +50,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route
           element={
@@ -66,6 +67,7 @@ export default function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/help" element={<Help />} />
         </Route>
+        <Route path="*" element={<div style={{ padding: '2rem', color: 'white' }}>404 - Page Not Found. Current Path: {window.location.pathname}</div>} />
       </Routes>
     </BrowserRouter>
   );
