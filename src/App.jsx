@@ -10,6 +10,7 @@ import Settings from './pages/Settings';
 import Account from './pages/Account';
 import Help from './pages/Help';
 import AuthCallback from './pages/AuthCallback';
+import ForgotPassword from './pages/ForgotPassword';
 import { useEffect } from 'react';
 
 function ProtectedRoute({ children }) {
@@ -48,6 +49,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route
           element={

@@ -68,6 +68,10 @@ export const authApi = {
   getSessions: () => api.get('/auth/sessions'),
   revokeSession: (id) => api.delete(`/auth/sessions/${id}`),
   revokeAllSessions: () => api.delete('/auth/sessions'),
+  forgotPassword: (data) => api.post('/auth/forgot-password', data),
+  verifyOTP: (data) => api.post('/auth/verify-otp', data),
+  resetPassword: (data) => api.post('/auth/reset-password', data),
+  updatePassword: (data) => api.patch('/auth/update-password', data),
 };
 
 export default api;

@@ -18,6 +18,13 @@ export default function AuthCallback() {
 
     if (token) {
       localStorage.setItem('sf_token', token);
+      
+      const name = searchParams.get('name');
+      const email = searchParams.get('email');
+      
+      if (name) localStorage.setItem('sf_user_name', name);
+      if (email) localStorage.setItem('sf_user_email', email);
+
       toast.success('Successfully signed in with Google!');
       navigate('/');
     } else {

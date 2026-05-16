@@ -123,7 +123,7 @@ export default function Dashboard() {
         {/* Content */}
         {prdLoading && prds.length === 0 ? (
           /* Loading skeleton */
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }} className="stagger-list">
             {[1, 2, 3].map(i => (
               <div
                 key={i}
@@ -142,6 +142,7 @@ export default function Dashboard() {
         ) : prds.length === 0 ? (
           /* Empty state */
           <div
+            className="animate-fade-in-up"
             style={{
               background: 'var(--bg-card)',
               border: '1px solid var(--border-main)',
@@ -197,7 +198,7 @@ export default function Dashboard() {
           </div>
         ) : (
           /* PRD list */
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }} className="stagger-list">
             {prds.map((prd) => (
               <div
                 key={prd._id}
@@ -206,28 +207,17 @@ export default function Dashboard() {
                   else if (['extracting', 'generating', 'analyzing', 'parsing'].includes(prd.status))
                     navigate(`/processing/${prd._id}`);
                 }}
+                className="hover-lift"
                 style={{
                   padding: '1.25rem 1.5rem',
                   background: 'var(--bg-card)',
                   border: '1px solid var(--border-main)',
                   borderRadius: '16px',
                   cursor: 'pointer',
-                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
-                }}
-                className="group"
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'var(--accent)';
-                  e.currentTarget.style.background = 'var(--bg-surface)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'var(--border-main)';
-                  e.currentTarget.style.background = 'var(--bg-card)';
-                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

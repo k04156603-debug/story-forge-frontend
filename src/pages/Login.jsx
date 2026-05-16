@@ -100,14 +100,18 @@ export default function Login() {
         </div>
 
         {/* Main Card */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-main)',
-          borderRadius: '16px',
-          overflow: 'hidden',
-        }}>
+        <div 
+          className="animate-fade-in-up"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-main)',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.05)',
+          }}
+        >
 
           {/* Left Panel */}
           <div style={{
@@ -138,7 +142,7 @@ export default function Login() {
             }}>
               Upload your PRD. Our AI analyzes, structures, and converts it into actionable user stories in seconds.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} className="stagger-list">
               {[
                 { icon: <LayoutPanelLeft size={18} color="var(--terracotta)" />, text: "AI-powered analysis" },
                 { icon: <ListTodo size={18} color="var(--terracotta)" />, text: "Structured user stories" },
@@ -208,8 +212,6 @@ export default function Login() {
                       onChange={(e) => setEmail(e.target.value)}
                       style={inputStyle}
                       required
-                      onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
-                      onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
                     />
                   </div>
                 </div>
@@ -241,8 +243,6 @@ export default function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                       style={{ ...inputStyle, paddingRight: '2.75rem' }}
                       required
-                      onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
-                      onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
                     />
                     <button
                       type="button"
@@ -267,7 +267,7 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="btn-primary"
+                  className="btn-primary hover-lift"
                   style={{
                     width: '100%',
                     justifyContent: 'center',
@@ -314,6 +314,7 @@ export default function Login() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                 <button
                   onClick={handleGoogleLogin}
+                  className="hover-lift"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -326,12 +327,9 @@ export default function Login() {
                     fontSize: '0.8125rem',
                     fontWeight: 500,
                     cursor: 'pointer',
-                    transition: 'all 0.15s ease',
                     fontFamily: 'var(--font-sans)',
                     color: 'var(--text-main)',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-card)'; }}
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24">
                     <path fill="#EA4335" d="M12.48 10.92v3.28h7.84c-.24 1.84-.909 3.16-2.09 4.34-1.2 1.2-3.07 2.48-6.13 2.48-4.75 0-8.49-3.74-8.49-8.49s3.74-8.49 8.49-8.49c2.57 0 4.41.97 5.79 2.29l2.31-2.31c-1.95-1.85-4.47-3-8.1-3C5.48 1 0 6.48 0 13.04S5.48 25.08 12.08 25.08c3.58 0 6.3-1.18 8.4-3.32 2.15-2.15 2.84-5.21 2.84-7.67 0-.74-.06-1.44-.18-2.12H12.48z" />

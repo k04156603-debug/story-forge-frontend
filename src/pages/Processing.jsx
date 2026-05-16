@@ -121,22 +121,34 @@ export default function Processing() {
 
         {/* Animated indicator */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}>
-          <div style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-main)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <Brain size={32} color="var(--accent)" className="animate-pulse" />
+          <div 
+            className="animate-fade-in-up"
+            style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-main)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
+              animation: 'float 3s ease-in-out infinite'
+            }}
+          >
+            <Brain size={32} color="var(--accent)" />
           </div>
         </div>
 
+        <style>{`
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+        `}</style>
+
         {/* Progress bar */}
-        <div style={{ marginBottom: '2rem' }}>
+        <div style={{ marginBottom: '2rem' }} className="animate-fade-in-up">
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -147,17 +159,18 @@ export default function Processing() {
             <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--accent)' }}>{progress}%</span>
           </div>
           <div style={{
-            height: '4px',
-            borderRadius: '2px',
+            height: '6px',
+            borderRadius: '3px',
             background: 'var(--bg-surface)',
             overflow: 'hidden',
+            border: '1px solid var(--border-subtle)'
           }}>
             <div
+              className="progress-bar-smooth"
               style={{
                 height: '100%',
-                borderRadius: '2px',
-                background: 'var(--accent)',
-                transition: 'width 1s ease-out',
+                borderRadius: '3px',
+                background: 'linear-gradient(90deg, var(--accent), #E5A17A)',
                 width: `${progress}%`,
               }}
             />
@@ -165,12 +178,17 @@ export default function Processing() {
         </div>
 
         {/* Pipeline stages */}
-        <div style={{
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-main)',
-          borderRadius: '16px',
-          padding: '1.5rem',
-        }}>
+        <div 
+          className="animate-fade-in-up"
+          style={{
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-main)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
+            animationDelay: '0.1s'
+          }}
+        >
           {stages.map((stage, i) => {
             const Icon = stage.icon;
             const isActive = i === currentStage;
@@ -186,11 +204,12 @@ export default function Processing() {
                   gap: '1rem',
                   padding: '0.75rem',
                   borderRadius: '10px',
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
                   marginBottom: i < stages.length - 1 ? '0.25rem' : 0,
-                  opacity: isPending ? 0.35 : isDone ? 0.6 : 1,
+                  opacity: isPending ? 0.3 : isDone ? 0.6 : 1,
                   background: isActive ? 'var(--terracotta-bg)' : 'transparent',
                   border: isActive ? '1px solid rgba(196, 113, 59, 0.15)' : '1px solid transparent',
+                  transform: isActive ? 'scale(1.02)' : 'scale(1)',
                 }}
               >
                 <div style={{
@@ -203,6 +222,7 @@ export default function Processing() {
                   background: isDone ? 'rgba(22, 163, 74, 0.08)' : isActive ? 'var(--bg-surface)' : 'var(--bg-surface)',
                   border: `1px solid ${isDone ? 'rgba(22, 163, 74, 0.2)' : 'var(--border-subtle)'}`,
                   flexShrink: 0,
+                  transition: 'all 0.5s ease'
                 }}>
                   {isDone ? (
                     <CheckCircle2 size={16} color="#16A34A" />
@@ -212,11 +232,12 @@ export default function Processing() {
                     <Icon size={16} color="var(--text-muted)" />
                   )}
                 </div>
-                <div>
+                <div style={{ flex: 1 }}>
                   <p style={{
                     fontSize: '0.875rem',
-                    fontWeight: 500,
+                    fontWeight: 600,
                     color: isActive ? 'var(--text-main)' : 'var(--text-body)',
+                    transition: 'color 0.5s ease'
                   }}>
                     {stage.label}
                   </p>

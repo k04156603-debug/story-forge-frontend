@@ -9,11 +9,36 @@ export default function Account() {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const formatSmartName = (name, email) => {
+    if (!email || email === 'Not logged in' || email === 'undefined') {
+      return (name && name !== 'undefined') ? name : 'Guest User';
+    }
+    
+    let namePart = email.split('@')[0].replace(/[0-9]/g, '');
+    const lastNames = ['tyagi', 'ranjan', 'sharma', 'singh', 'kumar', 'verma', 'gupta', 'das', 'roy', 'mishra', 'yadav', 'khan', 'ali', 'shukla', 'pandey'];
+    
+    let formattedName = namePart;
+    for (const ln of lastNames) {
+      if (namePart.endsWith(ln) && namePart.length > ln.length) {
+        const first = namePart.substring(0, namePart.length - ln.length);
+        formattedName = `${first} ${ln}`;
+        break;
+      }
+    }
+    formattedName = formattedName.replace(/[._-]/g, ' ');
+    const finalName = formattedName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    
+    if (finalName.length < 3 && name && name !== 'Guest User') return name;
+    return finalName;
+  };
+
   useEffect(() => {
-    // Sync with session storage
+    const storedName = localStorage.getItem('sf_user_name');
+    const storedEmail = localStorage.getItem('sf_user_email');
+
     setUserData({
-      name: localStorage.getItem('sf_user_name') || 'Guest User',
-      email: localStorage.getItem('sf_user_email') || 'Not logged in'
+      name: formatSmartName(storedName, storedEmail),
+      email: storedEmail || 'Not logged in'
     });
 
     const fetchSessions = async () => {
@@ -32,7 +57,10 @@ export default function Account() {
     }
     setLoading(true);
     try {
-      // await authApi.updatePassword(passwords);
+      await authApi.updatePassword({
+        currentPassword: passwords.current,
+        newPassword: passwords.next
+      });
       toast.success('Password updated successfully');
       setPasswords({ current: '', next: '', confirm: '' });
     } catch (err) {

@@ -9,17 +9,45 @@ export default function Layout() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [userData, setUserData] = useState({ name: 'User', email: 'user@example.com' });
 
+  const formatSmartName = (name, email) => {
+    if (!email || email === 'Not logged in' || email === 'undefined') {
+      return (name && name !== 'undefined') ? name : 'Guest User';
+    }
+    
+    // Prioritize email parsing as requested for testing
+    let namePart = email.split('@')[0].replace(/[0-9]/g, '');
+    const lastNames = ['tyagi', 'ranjan', 'sharma', 'singh', 'kumar', 'verma', 'gupta', 'das', 'roy', 'mishra', 'yadav', 'khan', 'ali', 'shukla', 'pandey'];
+    
+    let formattedName = namePart;
+    for (const ln of lastNames) {
+      if (namePart.endsWith(ln) && namePart.length > ln.length) {
+        const first = namePart.substring(0, namePart.length - ln.length);
+        formattedName = `${first} ${ln}`;
+        break;
+      }
+    }
+
+    formattedName = formattedName.replace(/[._-]/g, ' ');
+    const finalName = formattedName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+    // If the parsed name is very short (like just one word), and we have a better name, use it
+    if (finalName.length < 3 && name && name !== 'Guest User') return name;
+    
+    return finalName;
+  };
+
   useEffect(() => {
-    // Try to get user data
     const token = localStorage.getItem('sf_token');
     if (!token) return;
 
-    // Simple decoding or fetch if needed
+    const storedName = localStorage.getItem('sf_user_name');
+    const storedEmail = localStorage.getItem('sf_user_email');
+
     setUserData({
-      name: localStorage.getItem('sf_user_name') || 'Guest User',
-      email: localStorage.getItem('sf_user_email') || 'Not logged in'
+      name: formatSmartName(storedName, storedEmail),
+      email: storedEmail || 'Not logged in'
     });
-  }, []);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('sf_token');
@@ -93,6 +121,7 @@ export default function Layout() {
               <Link
                 key={item.path}
                 to={item.path}
+                className={isActive ? "" : "hover-lift"}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -102,7 +131,7 @@ export default function Layout() {
                   textDecoration: 'none',
                   fontSize: '0.875rem',
                   fontWeight: isActive ? 600 : 500,
-                  transition: 'all 0.2s ease',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   background: isActive ? 'var(--bg-terracotta)' : 'transparent',
                   color: isActive ? 'var(--accent)' : 'var(--text-body)',
                 }}
@@ -119,6 +148,7 @@ export default function Layout() {
         <div style={{ padding: '1.5rem 1rem' }}>
           <button
             onClick={() => setShowLogoutModal(true)}
+            className="hover-lift"
             style={{
               width: '100%',
               display: 'flex',
@@ -132,12 +162,9 @@ export default function Layout() {
               fontSize: '0.875rem',
               fontWeight: 600,
               cursor: 'pointer',
-              transition: 'all 0.2s ease',
               textAlign: 'left',
               fontFamily: 'var(--font-sans)',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#FEF2F2'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
           >
             <LogOut size={18} />
             Sign Out
@@ -147,7 +174,7 @@ export default function Layout() {
 
       {/* ── Main Content Area ────────────────── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100vh', overflowY: 'auto' }}>
-        <main style={{ flex: 1, padding: '0' }}>
+        <main key={location.pathname} className="animate-fade-in-up" style={{ flex: 1, padding: '0' }}>
           <Outlet />
         </main>
       </div>

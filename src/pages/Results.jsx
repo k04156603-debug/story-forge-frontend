@@ -93,17 +93,21 @@ export default function Results() {
   return (
     <div style={{ maxWidth: '960px', margin: '0 auto', padding: '2rem 2rem 6rem' }}>
       {/* Header */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: '2rem',
-        flexWrap: 'wrap',
-        gap: '1rem',
-      }}>
+      <div 
+        className="animate-fade-in-up"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '2rem',
+          flexWrap: 'wrap',
+          gap: '1rem',
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button
             onClick={() => navigate('/')}
+            className="hover-lift"
             style={{
               padding: '0.5rem',
               borderRadius: '10px',
@@ -111,13 +115,10 @@ export default function Results() {
               border: '1px solid var(--warm-gray-subtle)',
               cursor: 'pointer',
               color: 'var(--text-muted-ed)',
-              transition: 'all 0.15s ease',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)'; e.currentTarget.style.color = 'var(--text-main)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)'; }}
           >
             <ArrowLeft size={18} />
           </button>
@@ -158,25 +159,23 @@ export default function Results() {
           <button
             onClick={() => handleExport('csv')}
             disabled={exporting}
+            className="hover-lift"
             style={exportBtnStyle}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-card)'; }}
           >
             <Download size={13} /> CSV
           </button>
           <button
             onClick={() => handleExport('markdown')}
             disabled={exporting}
+            className="hover-lift"
             style={exportBtnStyle}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-card)'; }}
           >
             <Download size={13} /> MD
           </button>
           <button
             onClick={() => handleExport('jira')}
             disabled={exporting}
-            className="btn-primary"
+            className="btn-primary hover-lift"
             style={{ padding: '0.5rem 0.875rem', fontSize: '0.8125rem' }}
           >
             {exporting ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
@@ -186,14 +185,17 @@ export default function Results() {
       </div>
 
       {/* Tabs */}
-      <div style={{
-        display: 'flex',
-        borderRadius: '12px',
-        background: 'var(--bg-surface)',
-        padding: '4px',
-        marginBottom: '2rem',
-        border: '1px solid var(--border-main)',
-      }}>
+      <div 
+        className="animate-fade-in-up-delay-1"
+        style={{
+          display: 'flex',
+          borderRadius: '12px',
+          background: 'var(--bg-surface)',
+          padding: '4px',
+          marginBottom: '2rem',
+          border: '1px solid var(--border-main)',
+        }}
+      >
         {tabs.map(({ id: tabId, label, icon: Icon }) => (
           <button
             key={tabId}
@@ -221,10 +223,10 @@ export default function Results() {
       </div>
 
       {/* Tab Content */}
-      <div>
+      <div className="animate-fade-in-up-delay-2">
         {activeTab === 'stories' && (
           storiesLoading ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }} className="stagger-list">
               {[1, 2, 3, 4, 5].map(i => (
                 <div key={i} style={{
                   background: 'var(--bg-card)',
@@ -244,7 +246,7 @@ export default function Results() {
 
         {activeTab === 'quality' && (
           analysisLoading ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }} className="stagger-list">
               {[1, 2, 3].map(i => (
                 <div key={i} style={{
                   background: 'var(--bg-card)',

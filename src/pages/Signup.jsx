@@ -108,14 +108,18 @@ export default function Signup() {
         </div>
 
         {/* Main Card */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-main)',
-          borderRadius: '16px',
-          overflow: 'hidden',
-        }}>
+        <div 
+          className="animate-fade-in-up"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-main)',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.05)',
+          }}
+        >
 
           {/* Left Panel */}
           <div style={{
@@ -147,7 +151,7 @@ export default function Signup() {
             }}>
               Start transforming your PRDs into high-quality Agile artifacts in seconds.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} className="stagger-list">
               {[
                 { icon: <LayoutPanelLeft size={18} color="var(--terracotta)" />, text: "AI-powered analysis" },
                 { icon: <ListTodo size={18} color="var(--terracotta)" />, text: "Structured user stories" },
@@ -218,8 +222,6 @@ export default function Signup() {
                       onChange={handleChange}
                       style={inputStyle}
                       required
-                      onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
-                      onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
                     />
                   </div>
                 </div>
@@ -250,8 +252,6 @@ export default function Signup() {
                       onChange={handleChange}
                       style={inputStyle}
                       required
-                      onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
-                      onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
                     />
                   </div>
                 </div>
@@ -282,8 +282,6 @@ export default function Signup() {
                       onChange={handleChange}
                       style={{ ...inputStyle, paddingRight: '2.75rem' }}
                       required
-                      onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
-                      onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
                     />
                     <button
                       type="button"
@@ -331,8 +329,6 @@ export default function Signup() {
                       onChange={handleChange}
                       style={inputStyle}
                       required
-                      onFocus={e => { e.target.style.borderColor = 'var(--warm-gray)'; }}
-                      onBlur={e => { e.target.style.borderColor = 'var(--warm-gray-subtle)'; }}
                     />
                   </div>
                 </div>
@@ -340,7 +336,7 @@ export default function Signup() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="btn-primary"
+                  className="btn-primary hover-lift"
                   style={{
                     width: '100%',
                     justifyContent: 'center',
