@@ -179,7 +179,7 @@ export default function Login() {
                   color: 'var(--text-main)',
                   marginBottom: '0.375rem',
                 }}>
-                  Welcome back
+                  Welcome back (v1.0.5)
                 </h3>
                 <p style={{ fontSize: '0.9375rem', color: 'var(--text-body)' }}>
                   Sign in to continue to Story Forge
