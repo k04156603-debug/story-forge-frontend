@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import UploadPrd from './pages/UploadPrd';
@@ -45,7 +45,7 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -69,6 +69,6 @@ export default function App() {
         </Route>
         <Route path="*" element={<div style={{ padding: '2rem', color: 'white' }}>404 - Page Not Found. Current Path: {window.location.pathname}</div>} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
