@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const isProd = import.meta.env.PROD;
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL || 'https://story-forge-backend.onrender.com'}/api`,
+  baseURL: isProd 
+    ? 'https://story-forge-backend.onrender.com/api' 
+    : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api`,
   timeout: 300000,
   headers: { 'Content-Type': 'application/json' },
 });
