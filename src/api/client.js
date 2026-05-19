@@ -3,7 +3,7 @@ import axios from 'axios';
 const isProd = import.meta.env.PROD;
 const api = axios.create({
   baseURL: isProd 
-    ? 'https://story-forge-backend.onrender.com/api' 
+    ? 'https://story-forge-khaki.vercel.app/api' 
     : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api`,
   timeout: 300000,
   headers: { 'Content-Type': 'application/json' },
