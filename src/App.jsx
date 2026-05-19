@@ -12,6 +12,7 @@ import Help from './pages/Help';
 import AuthCallback from './pages/AuthCallback';
 import ForgotPassword from './pages/ForgotPassword';
 import { useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('sf_token');
@@ -69,6 +70,7 @@ export default function App() {
         </Route>
         <Route path="*" element={<div style={{ padding: '2rem', color: 'white' }}>404 - Page Not Found. Current Path: {window.location.pathname}</div>} />
       </Routes>
+      <Toaster position="bottom-right" />
     </BrowserRouter>
   );
 }

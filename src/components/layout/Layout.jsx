@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
 import { LogOut, Settings, User, BookOpen, HelpCircle, LayoutDashboard, ChevronRight } from 'lucide-react';
 
 export default function Layout() {
@@ -179,7 +178,6 @@ export default function Layout() {
         </main>
       </div>
 
-      <Toaster position="bottom-right" />
 
       {/* Logout Modal */}
       {showLogoutModal && (
