@@ -39,7 +39,8 @@ export default function ForgotPassword() {
       toast.success('OTP verified');
       setStep(3);
     } catch (err) {
-      toast.error(err.message || 'Invalid OTP');
+      toast.error('You entered the wrong code, please enter again');
+      setOtp(''); // Clear the input field for them to try again
     } finally {
       setIsLoading(false);
     }
