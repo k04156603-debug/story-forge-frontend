@@ -70,7 +70,7 @@ export default function App() {
         </Route>
         <Route path="*" element={<div style={{ padding: '2rem', color: 'white' }}>404 - Page Not Found. Current Path: {window.location.pathname}</div>} />
       </Routes>
-      <Toaster position="bottom-right" />
+      <Toaster position="top-center" />
     </BrowserRouter>
   );
 }

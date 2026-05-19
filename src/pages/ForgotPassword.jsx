@@ -17,12 +17,8 @@ export default function ForgotPassword() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await authApi.forgotPassword({ email });
-      if (response.otp) {
-        toast.success(`DEBUG: OTP is ${response.otp}`, { duration: 10000 });
-      } else {
-        toast.success('OTP sent to your email');
-      }
+      await authApi.forgotPassword({ email });
+      toast.success('OTP sent to your email');
       setStep(2);
     } catch (err) {
       toast.error(err.message || 'Failed to send OTP');
