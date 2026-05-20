@@ -6,28 +6,37 @@ import { useEffect, useRef, useCallback } from 'react';
 const usePolling = (fn, interval = 3000, enabled = false, stopCondition = null) => {
   const timerRef = useRef(null);
   const fnRef = useRef(fn);
+  const stopConditionRef = useRef(stopCondition);
 
   useEffect(() => {
     fnRef.current = fn;
   }, [fn]);
 
+  useEffect(() => {
+    stopConditionRef.current = stopCondition;
+  }, [stopCondition]);
+
   const start = useCallback(() => {
     if (timerRef.current) return;
+    
     const poll = async () => {
       try {
         const result = await fnRef.current();
-        if (stopCondition && stopCondition(result)) {
-          clearInterval(timerRef.current);
-          timerRef.current = null;
+        if (stopConditionRef.current && stopConditionRef.current(result)) {
+          if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+          }
           return;
         }
       } catch {
         // continue polling on error
       }
     };
+    
     poll(); // immediate first call
     timerRef.current = setInterval(poll, interval);
-  }, [interval, stopCondition]);
+  }, [interval]);
 
   const stop = useCallback(() => {
     if (timerRef.current) {
