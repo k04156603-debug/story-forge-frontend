@@ -3,6 +3,7 @@ import { Mail, Lock, ShieldCheck, ArrowRight, Loader2, CheckCircle2 } from 'luci
 import { Link, useNavigate } from 'react-router-dom';
 import { authApi } from '../api/client';
 import { toast } from 'react-hot-toast';
+import PasswordRequirements, { validatePassword } from '../components/PasswordRequirements';
 
 export default function ForgotPassword() {
   const [step, setStep] = useState(1); // 1: Email, 2: OTP, 3: New Password, 4: Success
@@ -44,6 +45,9 @@ export default function ForgotPassword() {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
+    if (!validatePassword(password)) {
+      return toast.error('Password does not meet all requirements');
+    }
     if (password !== confirmPassword) {
       return toast.error('Passwords do not match');
     }
@@ -225,6 +229,7 @@ export default function ForgotPassword() {
                   required
                 />
               </div>
+              <PasswordRequirements password={password} />
               <div style={{ position: 'relative' }}>
                 <Lock size={18} style={{
                   position: 'absolute',

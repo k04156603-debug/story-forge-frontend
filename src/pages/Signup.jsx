@@ -3,6 +3,7 @@ import { Mail, Lock, Eye, EyeOff, LayoutPanelLeft, ListTodo, Globe, User, Loader
 import { Link, useNavigate } from 'react-router-dom';
 import { authApi } from '../api/client';
 import { toast } from 'react-hot-toast';
+import PasswordRequirements, { validatePassword } from '../components/PasswordRequirements';
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,9 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    if (!validatePassword(formData.password)) {
+      return toast.error('Password does not meet all requirements');
+    }
     if (formData.password !== formData.confirmPassword) {
       return toast.error('Passwords do not match');
     }
@@ -302,6 +306,8 @@ export default function Signup() {
                     </button>
                   </div>
                 </div>
+
+                <PasswordRequirements password={formData.password} />
 
                 <div>
                   <label style={{
