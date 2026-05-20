@@ -27,10 +27,11 @@ const severityConfig = {
   },
 };
 
-export default function QualityPanel({ issues, summary }) {
+export default function QualityPanel({ issues: rawIssues, summary }) {
   const [filter, setFilter] = useState('all');
   const { resolveIssue } = useStore();
 
+  const issues = Array.isArray(rawIssues) ? rawIssues : [];
   const filtered = filter === 'all' ? issues : issues.filter((i) => i.severity === filter);
 
   const handleResolve = async (id) => {

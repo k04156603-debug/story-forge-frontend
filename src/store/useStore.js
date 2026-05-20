@@ -98,13 +98,13 @@ const useStore = create((set, get) => ({
   fetchStories: async (prdId) => {
     set({ storiesLoading: true });
     try {
-      const [grouped, stats] = await Promise.all([
+      const [groupedRes, statsRes] = await Promise.all([
         storyApi.getByPrd(prdId),
         storyApi.getStats(prdId),
       ]);
       set({
-        groupedStories: grouped || [],
-        storyStats: stats,
+        groupedStories: groupedRes?.data || groupedRes || [],
+        storyStats: statsRes?.data || statsRes,
         storiesLoading: false,
       });
     } catch (err) {
@@ -131,15 +131,15 @@ const useStore = create((set, get) => ({
   fetchAnalysis: async (prdId) => {
     set({ analysisLoading: true });
     try {
-      const [issues, summary, deps] = await Promise.all([
+      const [issuesRes, summaryRes, depsRes] = await Promise.all([
         analysisApi.getIssues(prdId),
         analysisApi.getSummary(prdId),
         analysisApi.getDependencies(prdId).catch(() => null),
       ]);
       set({
-        qualityIssues: issues || [],
-        qualitySummary: summary,
-        dependencyGraph: deps,
+        qualityIssues: issuesRes?.data || issuesRes || [],
+        qualitySummary: summaryRes?.data || summaryRes,
+        dependencyGraph: depsRes?.data || depsRes,
         analysisLoading: false,
       });
     } catch (err) {
