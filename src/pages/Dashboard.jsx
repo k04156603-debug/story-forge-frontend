@@ -203,9 +203,11 @@ export default function Dashboard() {
               <div
                 key={prd._id}
                 onClick={() => {
-                  if (prd.status === 'completed') navigate(`/results/${prd._id}`);
-                  else if (['extracting', 'generating', 'analyzing', 'parsing'].includes(prd.status))
+                  if (prd.status === 'completed') {
+                    navigate(`/results/${prd._id}`);
+                  } else {
                     navigate(`/processing/${prd._id}`);
+                  }
                 }}
                 className="hover-lift"
                 style={{
