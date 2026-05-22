@@ -8,6 +8,8 @@ import {
   useEdgesState,
   Handle,
   Position,
+  getSmoothStepPath,
+  EdgeLabelRenderer,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { GitBranch } from 'lucide-react';
@@ -44,7 +46,7 @@ const priorityBadgeStyles = {
 
 const edgeTypeColors = {
   blocks: '#EF4444',
-  depends_on: 'var(--text-body)',
+  depends_on: '#FFFFFF',
   related_to: 'var(--text-muted)',
 };
 
@@ -131,7 +133,127 @@ function CustomNode({ data }) {
   );
 }
 
+function CustomEdge({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  style = {},
+  markerEnd,
+  data,
+  label,
+}) {
+  const [edgePath, labelX, labelY] = getSmoothStepPath({
+    sourceX,
+    sourceY,
+    sourcePosition,
+    targetX,
+    targetY,
+    targetPosition,
+  });
+
+  // Calculate position 20px before the targetX, targetY point
+  // Since the edge is smoothstep and target is on the Left, the line segment directly entering the target is horizontal.
+  const iconX = targetX - 20;
+  const iconY = targetY;
+
+  const isBlocks = data?.type === 'blocks';
+  const isDepends = data?.type === 'depends_on';
+
+  return (
+    <>
+      <path
+        id={id}
+        style={style}
+        className="react-flow__edge-path"
+        d={edgePath}
+        markerEnd={markerEnd}
+      />
+      <EdgeLabelRenderer>
+        {/* Edge Text Label */}
+        {label && (
+          <div
+            style={{
+              position: 'absolute',
+              transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+              background: 'var(--bg-card)',
+              padding: '2px 6px',
+              borderRadius: '4px',
+              fontSize: '9px',
+              color: 'var(--text-muted)',
+              fontWeight: 500,
+              pointerEvents: 'none',
+              fontFamily: 'var(--font-sans)',
+              border: '1px solid var(--border-subtle)',
+              whiteSpace: 'nowrap',
+              zIndex: 999,
+            }}
+            className="nodrag nopan"
+          >
+            {label}
+          </div>
+        )}
+
+        {/* Lock/Chain Icons */}
+        {(isBlocks || isDepends) && (
+          <div
+            style={{
+              position: 'absolute',
+              transform: `translate(-50%, -50%) translate(${iconX}px,${iconY}px)`,
+              pointerEvents: 'none',
+              zIndex: 1000,
+            }}
+            className="nodrag nopan"
+          >
+            {isBlocks ? (
+              <div style={{
+                background: '#EF4444',
+                color: '#FFFFFF',
+                borderRadius: '50%',
+                width: '18px',
+                height: '18px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.4)',
+                border: '1.5px solid #FFFFFF',
+              }}>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+            ) : (
+              <div style={{
+                background: '#1E1E24',
+                color: '#FFFFFF',
+                borderRadius: '50%',
+                width: '18px',
+                height: '18px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.4)',
+                border: '1.5px solid #FFFFFF',
+              }}>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+              </div>
+            )}
+          </div>
+        )}
+      </EdgeLabelRenderer>
+    </>
+  );
+}
+
 const nodeTypes = { custom: CustomNode };
+const edgeTypes = { customEdge: CustomEdge };
 
 export default function DependencyGraphView({ graph }) {
   const initialNodes = useMemo(() => {
@@ -157,11 +279,15 @@ export default function DependencyGraphView({ graph }) {
       source: e.source,
       target: e.target,
       label: e.label,
-      type: 'smoothstep',
+      type: 'customEdge',
       animated: e.type === 'blocks',
+      data: {
+        type: e.type,
+      },
       style: {
         stroke: edgeTypeColors[e.type] || 'var(--text-body)',
         strokeWidth: e.type === 'blocks' ? 2 : 1.5,
+        strokeDasharray: e.type === 'blocks' ? '5,5' : undefined,
       },
       labelStyle: { fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'var(--font-sans)', fontWeight: 500 },
       labelBgStyle: { fill: 'var(--bg-card)', fillOpacity: 0.9 },
@@ -197,12 +323,48 @@ export default function DependencyGraphView({ graph }) {
         color: 'var(--text-body)',
         flexWrap: 'wrap',
       }}>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-          <span style={{ width: '24px', height: '2px', background: '#EF4444', display: 'inline-block' }} />
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            <span style={{ width: '24px', height: '2px', borderBottom: '2px dashed #EF4444', display: 'inline-block' }} />
+            <div style={{
+              background: '#EF4444',
+              color: '#FFFFFF',
+              borderRadius: '50%',
+              width: '14px',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '1px solid #FFFFFF',
+            }}>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+          </div>
           Blocks
         </span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-          <span style={{ width: '24px', height: '2px', background: 'var(--text-body)', display: 'inline-block' }} />
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            <span style={{ width: '24px', height: '2px', background: '#FFFFFF', display: 'inline-block' }} />
+            <div style={{
+              background: '#1E1E24',
+              color: '#FFFFFF',
+              borderRadius: '50%',
+              width: '14px',
+              height: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '1px solid #FFFFFF',
+            }}>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </div>
+          </div>
           Depends on
         </span>
         <div style={{ flex: 1 }} />
@@ -226,6 +388,7 @@ export default function DependencyGraphView({ graph }) {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
           fitView
           fitViewOptions={{ padding: 0.2 }}
           minZoom={0.3}
