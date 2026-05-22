@@ -14,7 +14,25 @@ const stages = [
 export default function Processing() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { processingStatus, pollStatus } = useStore();
+  const { processingStatus, pollStatus, startProcessing } = useStore();
+
+  useEffect(() => {
+    let active = true;
+    const init = async () => {
+      try {
+        const prd = await pollStatus(id);
+        if (active && prd.status === 'uploaded') {
+          startProcessing(id).catch((err) => {
+            console.error('Failed to start processing:', err);
+          });
+        }
+      } catch (err) {
+        console.error('Failed to fetch initial status:', err);
+      }
+    };
+    init();
+    return () => { active = false; };
+  }, [id, pollStatus, startProcessing]);
 
   const poll = useCallback(async () => {
     const prd = await pollStatus(id);

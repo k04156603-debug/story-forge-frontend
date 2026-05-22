@@ -12,7 +12,7 @@ export default function UploadPrd() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { uploadPrd, uploadPrdText, startProcessing } = useStore();
+  const { uploadPrd, uploadPrdText } = useStore();
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
@@ -50,7 +50,6 @@ export default function UploadPrd() {
         return;
       }
 
-      await startProcessing(prd.data.id);
       navigate(`/processing/${prd.data.id}`);
     } catch (err) {
       toast.error(err.message || 'Upload failed');
