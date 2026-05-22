@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import usePolling from '../hooks/usePolling';
@@ -15,24 +15,14 @@ export default function Processing() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { processingStatus, pollStatus, startProcessing } = useStore();
+  const isProcessingStep = useRef(false);
 
   useEffect(() => {
-    let active = true;
-    const init = async () => {
-      try {
-        const prd = await pollStatus(id);
-        if (active && prd.status === 'uploaded') {
-          startProcessing(id).catch((err) => {
-            console.error('Failed to start processing:', err);
-          });
-        }
-      } catch (err) {
-        console.error('Failed to fetch initial status:', err);
-      }
+    // Reset status on mount
+    return () => {
+      // Optional cleanup on unmount
     };
-    init();
-    return () => { active = false; };
-  }, [id, pollStatus, startProcessing]);
+  }, []);
 
   const poll = useCallback(async () => {
     const prd = await pollStatus(id);
@@ -49,6 +39,20 @@ export default function Processing() {
         return true;
       }
       if (prd.status === 'failed') return true;
+
+      // Check if we need to trigger the next step
+      const readyForNextStep = ['uploaded', 'extracting_done', 'generating_done', 'analyzing_done'].includes(prd.status);
+      if (readyForNextStep && !isProcessingStep.current) {
+        isProcessingStep.current = true;
+        startProcessing(id)
+          .then(() => {
+            isProcessingStep.current = false;
+          })
+          .catch((err) => {
+            console.error('Failed to trigger next step:', err);
+            isProcessingStep.current = false;
+          });
+      }
       return false;
     }
   );
