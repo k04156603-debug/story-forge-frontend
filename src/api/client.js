@@ -39,29 +39,31 @@ export const prdApi = {
     api.post('/prd/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
-  uploadText: (content, title) => api.post('/prd/text', { content, title }),
+  uploadText: (content, title) => api.post('/prd/upload', { content, title }),
   process: (id) => api.post(`/prd/${id}/process`),
   getStatus: (id) => api.get(`/prd/${id}`, { params: { _t: Date.now() } }),
   delete: (id) => api.delete(`/prd/${id}`),
 };
 
 export const storyApi = {
-  getGrouped: (prdId) => api.get(`/stories/${prdId}/grouped`),
-  getByPrd: (prdId) => api.get(`/stories/${prdId}/grouped`),
+  getGrouped: (prdId) => api.get(`/stories/${prdId}?grouped=true`),
+  getByPrd: (prdId) => api.get(`/stories/${prdId}?grouped=true`),
   getStats: (prdId) => api.get(`/stories/${prdId}/stats`),
-  update: (id, data) => api.patch(`/stories/${id}`, data),
-  export: (prdId, format) => api.get(`/export/${prdId}/${format}`, { responseType: 'blob' }),
+  update: (id, data) => api.put(`/stories/${id}`, data),
+  export: (prdId, format) =>
+    api.post(`/export/${prdId}`, { format }, { responseType: format === 'jira' ? 'json' : 'blob' }),
 };
 
 export const exportApi = {
   export: (prdId, format) =>
-    api.get(`/export/${prdId}/${format}`, { responseType: 'blob' }),
+    api.post(`/export/${prdId}`, { format }, { responseType: format === 'jira' ? 'json' : 'blob' }),
 };
 
 export const analysisApi = {
   getIssues: (prdId) => api.get(`/analysis/${prdId}/issues`),
   getSummary: (prdId) => api.get(`/analysis/${prdId}/summary`),
   getDependencies: (prdId) => api.get(`/analysis/${prdId}/dependencies`),
+  resolveIssue: (issueId) => api.patch(`/analysis/issues/${issueId}/resolve`),
 };
 
 export const authApi = {
