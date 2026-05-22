@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, ShieldCheck, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ShieldCheck, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authApi } from '../api/client';
 import { toast } from 'react-hot-toast';
@@ -12,6 +12,7 @@ export default function ForgotPassword() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleRequestOTP = async (e) => {
@@ -221,13 +222,30 @@ export default function ForgotPassword() {
                   color: 'var(--text-muted)',
                 }} />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="New password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  style={inputStyle}
+                  style={{ ...inputStyle, paddingRight: '2.75rem' }}
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: 'absolute',
+                    right: '0.875rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: 'var(--text-muted)',
+                    padding: 0,
+                  }}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
               <PasswordRequirements password={password} />
               <div style={{ position: 'relative' }}>
@@ -239,13 +257,30 @@ export default function ForgotPassword() {
                   color: 'var(--text-muted)',
                 }} />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Confirm new password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  style={inputStyle}
+                  style={{ ...inputStyle, paddingRight: '2.75rem' }}
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: 'absolute',
+                    right: '0.875rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: 'var(--text-muted)',
+                    padding: 0,
+                  }}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
             <button
