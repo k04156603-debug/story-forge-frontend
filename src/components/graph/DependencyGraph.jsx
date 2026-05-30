@@ -46,7 +46,7 @@ const priorityBadgeStyles = {
 
 const edgeTypeColors = {
   blocks: '#EF4444',
-  depends_on: '#FFFFFF',
+  depends_on: 'var(--text-main)',
   related_to: 'var(--text-muted)',
 };
 
@@ -59,10 +59,10 @@ function CustomNode({ data }) {
     <div style={{
       minWidth: '200px',
       background: 'var(--bg-surface)',
-      border: `1px solid ${priorityColor}40`,
+      border: `1.5px solid ${priorityColor}`,
       borderRadius: '12px',
       padding: '0.75rem 1rem',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+      boxShadow: `0 4px 12px rgba(0, 0, 0, 0.15), 0 0 10px ${priorityColor}1a`,
       position: 'relative',
       transition: 'all 0.2s ease',
     }}>
@@ -104,7 +104,7 @@ function CustomNode({ data }) {
       <p style={{
         fontSize: '0.75rem',
         fontWeight: 700,
-        color: priorityColor, // Matches priority dot color
+        color: 'var(--text-main)', // High-contrast readable title text
         lineHeight: 1.3,
         margin: '0.25rem 0 0.5rem 0',
       }}>
@@ -261,7 +261,9 @@ export default function DependencyGraphView({ graph }) {
     return graph.nodes.map((n) => ({
       id: n.id,
       type: 'custom',
-      position: n.position || { x: Math.random() * 800, y: Math.random() * 600 },
+      position: n.position
+        ? { x: n.position.x * 2.3, y: n.position.y * 1.7 }
+        : { x: Math.random() * 800, y: Math.random() * 600 },
       data: {
         label: n.label,
         storyId: n.id,
@@ -286,7 +288,7 @@ export default function DependencyGraphView({ graph }) {
       },
       style: {
         stroke: edgeTypeColors[e.type] || 'var(--text-body)',
-        strokeWidth: e.type === 'blocks' ? 2 : 1.5,
+        strokeWidth: e.type === 'blocks' ? 2.5 : 2.0,
         strokeDasharray: e.type === 'blocks' ? '5,5' : undefined,
       },
       labelStyle: { fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'var(--font-sans)', fontWeight: 500 },
@@ -347,7 +349,7 @@ export default function DependencyGraphView({ graph }) {
         </span>
         <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-            <span style={{ width: '24px', height: '2px', background: '#FFFFFF', display: 'inline-block' }} />
+            <span style={{ width: '24px', height: '2px', background: 'var(--text-main)', display: 'inline-block' }} />
             <div style={{
               background: '#1E1E24',
               color: '#FFFFFF',
@@ -395,7 +397,7 @@ export default function DependencyGraphView({ graph }) {
           maxZoom={2}
           proOptions={{ hideAttribution: true }}
         >
-          <Background color="var(--border-subtle)" gap={20} size={1} />
+          <Background color="var(--border-main)" variant="dots" gap={20} size={1} />
           <Controls
             style={{ borderRadius: '10px', border: '1px solid var(--border-main)', background: 'var(--bg-card)' }}
           />

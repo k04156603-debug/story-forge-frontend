@@ -25,6 +25,8 @@ export default function UploadPrd() {
     accept: {
       'application/pdf': ['.pdf'],
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['.pptx'],
+      'application/vnd.ms-powerpoint': ['.ppt'],
       'text/markdown': ['.md'],
       'text/plain': ['.txt'],
     },
@@ -212,7 +214,7 @@ export default function UploadPrd() {
                 {...getRootProps()}
                 style={{
                   padding: '3.5rem 2rem',
-                  background: 'var(--bg-card)',
+                  background: isDragActive ? 'var(--bg-terracotta)' : 'var(--bg-card)',
                   border: `2px dashed ${isDragActive ? 'var(--accent)' : 'var(--border-main)'}`,
                   borderRadius: '16px',
                   textAlign: 'center',
@@ -240,7 +242,7 @@ export default function UploadPrd() {
                   {isDragActive ? 'Drop your file here' : 'Drag & drop your PRD file'}
                 </p>
                 <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
-                  or click to browse · PDF, DOCX, MD supported
+                  or click to browse · PDF, DOCX, PPTX, PPT, MD supported
                 </p>
               </div>
             )}
