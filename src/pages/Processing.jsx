@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import usePolling from '../hooks/usePolling';
@@ -16,6 +16,16 @@ export default function Processing() {
   const navigate = useNavigate();
   const { processingStatus, pollStatus, startProcessing } = useStore();
   const isProcessingStep = useRef(false);
+  const [retryCountDown, setRetryCountDown] = useState(0);
+  const [retryMessage, setRetryMessage] = useState('');
+
+  useEffect(() => {
+    if (retryCountDown <= 0) return;
+    const timer = setInterval(() => {
+      setRetryCountDown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [retryCountDown]);
 
   useEffect(() => {
     // Reset status on mount
@@ -42,7 +52,7 @@ export default function Processing() {
 
       // Check if we need to trigger the next step
       const readyForNextStep = ['uploaded', 'extracting_done', 'generating_done', 'analyzing_done'].includes(prd.status);
-      if (readyForNextStep && !isProcessingStep.current) {
+      if (readyForNextStep && !isProcessingStep.current && retryCountDown <= 0) {
         isProcessingStep.current = true;
         startProcessing(id)
           .then(() => {
@@ -51,6 +61,11 @@ export default function Processing() {
           .catch((err) => {
             console.error('Failed to trigger next step:', err);
             isProcessingStep.current = false;
+            if (err.isRetryable) {
+              const seconds = err.retryAfter || 10;
+              setRetryCountDown(seconds);
+              setRetryMessage(`API limit reached. Cooldown: ${seconds}s...`);
+            }
           });
       }
       return false;
@@ -58,7 +73,7 @@ export default function Processing() {
   );
 
   const progress = processingStatus?.progress || 0;
-  const message = processingStatus?.message || 'Initializing...';
+  const message = retryCountDown > 0 ? retryMessage.replace(/\d+s/, `${retryCountDown}s`) : (processingStatus?.message || 'Initializing...');
   const status = processingStatus?.status || 'extracting';
 
   const getCurrentStageIndex = () => {

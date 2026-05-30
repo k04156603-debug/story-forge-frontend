@@ -28,7 +28,12 @@ api.interceptors.response.use(
         window.location.href = '/login';
       }
     }
-    return Promise.reject(new Error(message));
+    const customError = new Error(message);
+    if (error.response?.data) {
+      customError.isRetryable = error.response.data.isRetryable;
+      customError.retryAfter = error.response.data.retryAfter;
+    }
+    return Promise.reject(customError);
   }
 );
 
