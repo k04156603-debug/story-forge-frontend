@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { FileText, Plus, Trash2, Clock, CheckCircle2, AlertTriangle, Loader2, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useTranslation } from '../utils/i18n';
 
 export default function Dashboard() {
   const { prds, prdLoading, fetchPrds, deletePrd } = useStore();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchPrds();
@@ -57,18 +59,13 @@ export default function Dashboard() {
       >
         <div style={{ flex: '1 1 520px', minWidth: '280px' }}>
           <p className="label-section" style={{ marginBottom: '1.25rem' }}>
-            CHAPTER 01 — INTAKE
+            {t('chapterIntake')}
           </p>
-          <h1 className="heading-hero" style={{ marginBottom: '1.5rem' }}>
-            Turn product{' '}
-            <span className="highlight">requirements</span>
-            <br />
-            into shippable stories.
+          <h1 className="heading-hero" style={{ marginBottom: '1.5rem', lineHeight: 1.25 }}>
+            {t('turnPrd')}
           </h1>
           <p className="text-body-editorial">
-            Upload a PRD. Story Forge decomposes it into Agile user stories,
-            acceptance criteria, edge cases, dependencies, and a quality
-            audit — in minutes.
+            {t('prdDescription')}
           </p>
         </div>
         <div
@@ -90,7 +87,7 @@ export default function Dashboard() {
             }}
           >
             <Plus size={18} />
-            Forge a new PRD
+            {t('forgeNewPrd')}
           </Link>
         </div>
       </section>
@@ -111,10 +108,10 @@ export default function Dashboard() {
             color: 'var(--rich-black)',
             letterSpacing: '-0.01em',
           }}>
-            Archive
+            {t('archive')}
           </h2>
           <span className="label-section">
-            {prds.length} {prds.length === 1 ? 'DOCUMENT' : 'DOCUMENTS'}
+            {prds.length} {prds.length === 1 ? t('document') : t('documents')}
           </span>
         </div>
 
@@ -175,7 +172,7 @@ export default function Dashboard() {
               color: 'var(--text-main)',
               marginBottom: '0.5rem',
             }}>
-              No PRDs yet
+              {t('noPrdsYet')}
             </h3>
             <p style={{
               fontSize: '0.9375rem',
@@ -186,14 +183,14 @@ export default function Dashboard() {
               marginRight: 'auto',
               lineHeight: 1.6,
             }}>
-              Paste your first product requirements doc and watch it decompose.
+              {t('pasteFirstPrd')}
             </p>
             <Link
               to="/upload"
               className="btn-primary"
               style={{ textDecoration: 'none', padding: '0.75rem 1.5rem' }}
             >
-              Start with a PRD
+              {t('startWithPrd')}
             </Link>
           </div>
         ) : (
@@ -254,13 +251,13 @@ export default function Dashboard() {
                     }}>
                       <span>{prd.fileType?.toUpperCase()}</span>
                       <span style={{ opacity: 0.4 }}>·</span>
-                      <span>{(prd.charCount / 1000).toFixed(1)}k chars</span>
+                      <span>{(prd.charCount / 1000).toFixed(1)}k {t('chars')}</span>
                       <span style={{ opacity: 0.4 }}>·</span>
                       <span>{new Date(prd.createdAt).toLocaleDateString()}</span>
                       {prd.metadata?.storyCount && (
                         <>
                           <span style={{ opacity: 0.4 }}>·</span>
-                          <span>{prd.metadata.storyCount} stories</span>
+                          <span>{prd.metadata.storyCount} {t('stories')}</span>
                         </>
                       )}
                     </div>

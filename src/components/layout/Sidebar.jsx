@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Upload, Settings, Sparkles, LogOut } from 'lucide-react';
-
-const navItems = [
-  { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/upload', icon: Upload, label: 'New PRD' },
-];
+import { useTranslation } from '../../utils/i18n';
 
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const { t } = useTranslation();
+
+  const navItems = [
+    { to: '/', icon: LayoutDashboard, label: t('dashboard'), key: 'dashboard' },
+    { to: '/upload', icon: Upload, label: t('newPrd'), key: 'newPrd' },
+  ];
 
   const handleLogout = () => {
     localStorage.removeItem('sf_token');
@@ -70,7 +72,7 @@ export default function Sidebar() {
         <div className="flex flex-col items-center gap-2">
           <Link
             to="/settings"
-            title="Settings"
+            title={t('settings')}
             className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors group relative"
             style={{ color: 'var(--sidebar-icon)' }}
             onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--hover-bg)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
@@ -81,14 +83,14 @@ export default function Sidebar() {
               className="absolute left-full ml-3 px-2 py-1 rounded-md text-xs opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50"
               style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
             >
-              Settings
+              {t('settings')}
             </span>
           </Link>
 
           {/* Logout Button */}
           <button
             onClick={() => setShowLogoutModal(true)}
-            title="Logout"
+            title={t('logout')}
             className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors group relative"
             style={{ color: 'var(--sidebar-icon)' }}
             onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'rgba(239,68,68,0.1)'; e.currentTarget.style.color = '#f87171'; }}
@@ -99,7 +101,7 @@ export default function Sidebar() {
               className="absolute left-full ml-3 px-2 py-1 rounded-md text-xs opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50"
               style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
             >
-              Logout
+              {t('logout')}
             </span>
           </button>
         </div>

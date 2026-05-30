@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone';
 import useStore from '../store/useStore';
 import { Upload, FileText, Type, ArrowRight, Loader2, X } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useTranslation } from '../utils/i18n';
 
 export default function UploadPrd() {
   const [mode, setMode] = useState('upload'); // 'upload' | 'paste'
@@ -13,6 +14,7 @@ export default function UploadPrd() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { uploadPrd, uploadPrdText } = useStore();
+  const { t } = useTranslation();
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
@@ -84,7 +86,7 @@ export default function UploadPrd() {
       {/* Header */}
       <div className="animate-fade-in-up" style={{ textAlign: 'center', marginBottom: '3rem' }}>
         <p className="label-section" style={{ marginBottom: '1rem' }}>
-          NEW DOCUMENT
+          {t('newDocument')}
         </p>
         <h1 style={{
           fontFamily: 'var(--font-serif)',
@@ -94,7 +96,7 @@ export default function UploadPrd() {
           letterSpacing: '-0.02em',
           marginBottom: '0.75rem',
         }}>
-          Upload PRD
+          {t('uploadPrd')}
         </h1>
         <p style={{
           fontSize: '0.9375rem',
@@ -103,7 +105,7 @@ export default function UploadPrd() {
           margin: '0 auto',
           lineHeight: 1.6,
         }}>
-          Upload a document or paste your requirements. Our AI will decompose it into structured Agile artifacts.
+          {t('uploadDescription')}
         </p>
       </div>
 
@@ -120,10 +122,10 @@ export default function UploadPrd() {
         }}
       >
         <button onClick={() => setMode('upload')} style={tabStyle(mode === 'upload')}>
-          <Upload size={15} /> Upload File
+          <Upload size={15} /> {t('uploadFile')}
         </button>
         <button onClick={() => setMode('paste')} style={tabStyle(mode === 'paste')}>
-          <Type size={15} /> Paste Content
+          <Type size={15} /> {t('pasteContent')}
         </button>
       </div>
 
@@ -136,13 +138,13 @@ export default function UploadPrd() {
           color: 'var(--text-main)',
           marginBottom: '0.5rem',
         }}>
-          Title <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(optional)</span>
+          {t('titleLabel')} <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>{t('optional')}</span>
         </label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="e.g., E-Commerce Platform PRD v2.0"
+          placeholder={t('titlePlaceholder')}
           style={{
             width: '100%',
             padding: '0.75rem 1rem',
@@ -239,10 +241,10 @@ export default function UploadPrd() {
                   <Upload size={22} color="var(--text-muted)" />
                 </div>
                 <p style={{ fontWeight: 500, color: 'var(--text-main)', marginBottom: '0.25rem' }}>
-                  {isDragActive ? 'Drop your file here' : 'Drag & drop your PRD file'}
+                  {isDragActive ? t('dropHere') : t('dragDropFile')}
                 </p>
                 <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
-                  or click to browse · PDF, DOCX, PPTX, PPT, MD supported
+                  {t('browseNotice')}
                 </p>
               </div>
             )}
@@ -256,12 +258,12 @@ export default function UploadPrd() {
               color: 'var(--text-main)',
               marginBottom: '0.5rem',
             }}>
-              PRD Content
+              {t('prdContent')}
             </label>
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="Paste your Product Requirements Document here...&#10;&#10;Include features, user flows, requirements, acceptance criteria, etc."
+              placeholder={t('pastePlaceholder')}
               rows={14}
               style={{
                 width: '100%',
@@ -281,7 +283,7 @@ export default function UploadPrd() {
               onBlur={e => { e.target.style.borderColor = 'var(--border-main)'; }}
             />
             <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted-ed)', marginTop: '0.5rem' }}>
-              {content.length} characters · Minimum 50 required
+              {content.length} {t('minChars')}
             </p>
           </div>
         )}
@@ -302,11 +304,11 @@ export default function UploadPrd() {
         {loading ? (
           <>
             <Loader2 size={18} className="animate-spin" />
-            Uploading…
+            {t('uploading')}
           </>
         ) : (
           <>
-            Analyze with AI
+            {t('analyzeWithAi')}
             <ArrowRight size={18} />
           </>
         )}

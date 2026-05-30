@@ -17,6 +17,7 @@ const useStore = create((set, get) => ({
   activeTab: 'stories',
   selectedStory: null,
   processingStatus: null,
+  language: localStorage.getItem('sf_lang') || 'English',
 
   fetchPrds: async () => {
     set({ prdLoading: true, prdError: null });
@@ -163,6 +164,10 @@ const useStore = create((set, get) => ({
   setActiveTab: (tab) => set({ activeTab: tab }),
   setSelectedStory: (story) => set({ selectedStory: story }),
   clearError: () => set({ prdError: null }),
+  setLanguage: (lang) => {
+    localStorage.setItem('sf_lang', lang);
+    set({ language: lang });
+  },
   reset: () => set({
     currentPrd: null,
     stories: [],
